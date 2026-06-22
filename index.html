@@ -1,160 +1,2045 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Responsive Calculator</title>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="description" content="Indore District Patel Samaj Community Portal - District level community information portal"/>
+<title>Patel Samaj | Indore District Community Portal</title>
 
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 1px;
-            padding: 1px;
-            font-family: Arial, sans-serif;
-        }
+<!-- Bootstrap 5 -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Hind:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<!-- AOS Animations -->
+<link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet"/>
+<!-- Lightbox -->
+<link href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" rel="stylesheet"/>
 
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background: linear-gradient(135deg, #1185eb, #a4642f, #ff3b30, #c78734);
-        }
+<style>
+/* =========================================================
+   ROOT TOKENS
+   ========================================================= */
+:root {
+  --saffron:    #E85D04;
+  --deep-saf:   #C44B00;
+  --gold:       #F4A261;
+  --cream:      #FFF8F0;
+  --dark-ink:   #1A1A2E;
+  --mid-ink:    #2D3A4A;
+  --muted:      #6B7280;
+  --border:     #E5D9CE;
+  --white:      #FFFFFF;
+  --card-bg:    #FFFFFF;
+  --body-bg:    #FFF8F0;
+  --nav-bg:     rgba(26,26,46,0.97);
+  --shadow-sm:  0 2px 12px rgba(232,93,4,0.10);
+  --shadow-md:  0 8px 32px rgba(232,93,4,0.15);
+  --radius:     14px;
+  --radius-lg:  22px;
+  font-size: 16px;
+}
 
-        .calculator {
-            width: 100%;
-            max-width: 350px;
-            background: #18121a;
-            border-radius: 15px;
-            padding: 20px;
-            box-shadow: 0 10px 25px rgba(52, 7, 255, 0.3);
-        }
+[data-theme="dark"] {
+  --cream:      #0F1117;
+  --body-bg:    #0F1117;
+  --card-bg:    #1A1F2E;
+  --dark-ink:   #F0EBE3;
+  --mid-ink:    #CCC5BD;
+  --muted:      #9CA3AF;
+  --border:     #2D3040;
+  --white:      #1A1F2E;
+}
 
-        .display {
-            width: 100%;
-            height: 60px;
-            background: #bc4949;
-            color: rgb(78, 20, 251);
-            font-size: 1.8rem;
-            text-align: right;
-            padding: 10px;
-            border-radius: 10px;
-            margin-bottom: 15px;
-            overflow-x: auto;
-        }
+/* =========================================================
+   BASE
+   ========================================================= */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Hind',sans-serif;
+  background:var(--body-bg);
+  color:var(--dark-ink);
+  transition:background .3s,color .3s;
+  overflow-x:hidden;
+}
+h1,h2,h3,h4,h5,h6{font-family:'Baloo 2',sans-serif;color:var(--dark-ink)}
+a{text-decoration:none;color:inherit}
+img{max-width:100%;height:auto}
+.text-saffron{color:var(--saffron)}
+.bg-saffron{background:var(--saffron)}
 
-        .buttons {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-        }
+/* =========================================================
+   NAVBAR
+   ========================================================= */
+.navbar{
+  background:var(--nav-bg) !important;
+  backdrop-filter:blur(16px);
+  padding:10px 0;
+  transition:all .3s;
+  border-bottom:2px solid var(--saffron);
+}
+.navbar-brand{
+  font-family:'Baloo 2',sans-serif;
+  font-weight:800;
+  font-size:1.5rem;
+  color:#fff !important;
+  display:flex;align-items:center;gap:10px;
+}
+.brand-icon{
+  width:42px;height:42px;
+  background:var(--saffron);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.2rem;color:#fff;
+  flex-shrink:0;
+}
+.navbar-nav .nav-link{
+  color:rgba(255,255,255,0.85) !important;
+  font-weight:500;font-size:.95rem;
+  padding:8px 14px !important;
+  border-radius:8px;
+  transition:all .2s;
+  position:relative;
+}
+.navbar-nav .nav-link:hover,.navbar-nav .nav-link.active{
+  color:#fff !important;background:rgba(232,93,4,0.25);
+}
+.navbar-toggler{border-color:rgba(255,255,255,.3)}
+.navbar-toggler-icon{filter:invert(1)}
 
-        button {
-            padding: 15px;
-            font-size: 1.2rem;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
+/* =========================================================
+   HERO
+   ========================================================= */
+.hero{
+  min-height:100vh;
+  background:linear-gradient(135deg, #1A1A2E 0%, #2D1810 40%, #C44B00 75%, #E85D04 100%);
+  position:relative;
+  display:flex;align-items:center;
+  overflow:hidden;
+}
+.hero::before{
+  content:'';
+  position:absolute;inset:0;
+  background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+.hero-orb{
+  position:absolute;
+  border-radius:50%;
+  filter:blur(80px);
+  opacity:.35;
+  pointer-events:none;
+}
+.orb1{width:500px;height:500px;background:#E85D04;top:-150px;right:-100px}
+.orb2{width:400px;height:400px;background:#F4A261;bottom:-100px;left:-80px}
+.hero-content{position:relative;z-index:2;padding:120px 0 80px}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.25);
+  color:#fff;padding:6px 18px;border-radius:50px;
+  font-size:.85rem;font-weight:600;letter-spacing:.5px;
+  margin-bottom:20px;backdrop-filter:blur(8px);
+}
+.hero h1{
+  font-size:clamp(2.5rem,6vw,5rem);
+  font-weight:800;color:#fff;
+  line-height:1.1;margin-bottom:10px;
+}
+.hero h1 span{color:var(--gold)}
+.hero-district{
+  font-size:clamp(1.1rem,2.5vw,1.6rem);
+  color:rgba(255,255,255,.75);
+  font-weight:400;margin-bottom:24px;
+  font-family:'Baloo 2',sans-serif;
+}
+.hero-desc{
+  font-size:1.05rem;color:rgba(255,255,255,.7);
+  max-width:520px;margin-bottom:36px;line-height:1.7;
+}
+.btn-hero{
+  background:var(--gold);color:var(--dark-ink);
+  font-family:'Baloo 2',sans-serif;font-weight:700;
+  padding:14px 32px;border-radius:50px;font-size:1rem;
+  border:none;transition:all .25s;display:inline-flex;
+  align-items:center;gap:8px;
+}
+.btn-hero:hover{background:#fff;transform:translateY(-2px);box-shadow:0 12px 32px rgba(0,0,0,.25)}
+.btn-hero-outline{
+  background:transparent;color:#fff;
+  border:2px solid rgba(255,255,255,.4);
+  font-family:'Baloo 2',sans-serif;font-weight:600;
+  padding:13px 30px;border-radius:50px;font-size:1rem;
+  transition:all .25s;display:inline-flex;align-items:center;gap:8px;
+}
+.btn-hero-outline:hover{background:rgba(255,255,255,.1);border-color:#fff;color:#fff}
+.hero-stats{
+  display:flex;gap:32px;margin-top:48px;flex-wrap:wrap;
+}
+.hero-stat{color:#fff}
+.hero-stat strong{
+  font-family:'Baloo 2',sans-serif;font-size:1.8rem;
+  font-weight:800;color:var(--gold);display:block;line-height:1;
+}
+.hero-stat span{font-size:.8rem;opacity:.7;letter-spacing:.5px;text-transform:uppercase}
+.hero-img-side{
+  position:relative;z-index:2;display:flex;
+  justify-content:center;align-items:center;
+}
+.hero-card-float{
+  background:rgba(255,255,255,.1);
+  backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,.2);
+  border-radius:var(--radius-lg);
+  padding:32px;color:#fff;
+  text-align:center;
+  animation:floatAnim 4s ease-in-out infinite;
+}
+@keyframes floatAnim{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+.hero-icon-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:20px;
+}
+.hero-icon-item{
+  background:rgba(255,255,255,.08);border-radius:12px;
+  padding:16px 12px;text-align:center;
+  border:1px solid rgba(255,255,255,.1);
+}
+.hero-icon-item i{font-size:1.8rem;color:var(--gold);margin-bottom:8px;display:block}
+.hero-icon-item span{font-size:.78rem;opacity:.8}
 
-        button:hover {
-            opacity: 0.8;
-        }
+/* =========================================================
+   SECTION STYLES
+   ========================================================= */
+section{padding:80px 0}
+.section-eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  color:var(--saffron);font-weight:600;font-size:.85rem;
+  letter-spacing:1px;text-transform:uppercase;
+  margin-bottom:12px;
+}
+.section-eyebrow::before,.section-eyebrow::after{
+  content:'';width:24px;height:2px;background:var(--saffron);border-radius:2px;
+}
+.section-title{
+  font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:800;
+  color:var(--dark-ink);margin-bottom:16px;line-height:1.2;
+}
+.section-sub{color:var(--muted);font-size:1rem;line-height:1.7;max-width:560px}
+.divider{width:60px;height:4px;background:linear-gradient(90deg,var(--saffron),var(--gold));border-radius:4px;margin:16px 0}
 
-        .operator {
-            background: #ff9500;
-            color: white;
-        }
+/* =========================================================
+   CARDS (base)
+   ========================================================= */
+.card{
+  background:var(--card-bg);border:1px solid var(--border);
+  border-radius:var(--radius);box-shadow:var(--shadow-sm);
+  transition:transform .25s,box-shadow .25s;
+}
+.card:hover{transform:translateY(-4px);box-shadow:var(--shadow-md)}
 
-        .equal {
-            background: #c78734;
-            color: white;
-            grid-column: span 2;
-        }
+/* =========================================================
+   ABOUT SECTION
+   ========================================================= */
+.about-section{background:var(--cream)}
+.about-card{
+  background:var(--card-bg);border-radius:var(--radius);
+  padding:28px;border-left:4px solid var(--saffron);
+  box-shadow:var(--shadow-sm);height:100%;
+}
+.about-card .icon{
+  width:52px;height:52px;background:linear-gradient(135deg,var(--saffron),var(--gold));
+  border-radius:12px;display:flex;align-items:center;justify-content:center;
+  font-size:1.3rem;color:#fff;margin-bottom:16px;
+}
+.about-card h5{font-family:'Baloo 2',sans-serif;font-weight:700;font-size:1.1rem;margin-bottom:10px}
+.about-card p{color:var(--muted);font-size:.93rem;line-height:1.7;margin:0}
 
-        .clear {
-            background: #ff3b30;
-            color: white, #ff3b30;
-           
-        }
+/* =========================================================
+   LEADERS SECTION
+   ========================================================= */
+.leaders-section{background:var(--body-bg)}
+.leader-card{
+  background:var(--card-bg);border-radius:var(--radius-lg);
+  overflow:hidden;box-shadow:var(--shadow-sm);
+  border:1px solid var(--border);text-align:center;
+  transition:all .3s;position:relative;
+}
+.leader-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-md)}
+.leader-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:6px;
+  background:linear-gradient(90deg,var(--saffron),var(--gold));
+}
+.leader-photo{
+  width:100px;height:100px;border-radius:50%;margin:32px auto 16px;
+  background:linear-gradient(135deg,var(--saffron),var(--gold));
+  display:flex;align-items:center;justify-content:center;
+  font-size:2.5rem;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:800;
+  border:4px solid var(--cream);box-shadow:0 4px 16px rgba(232,93,4,.25);
+  overflow:hidden;
+}
+.leader-photo img{width:100%;height:100%;object-fit:cover}
+.leader-card h5{font-family:'Baloo 2',sans-serif;font-weight:700;font-size:1.05rem;margin-bottom:4px}
+.leader-desig{
+  background:var(--saffron);color:#fff;
+  font-size:.78rem;font-weight:600;letter-spacing:.5px;
+  padding:4px 16px;border-radius:50px;
+  display:inline-block;margin-bottom:16px;
+}
+.leader-info{padding:0 20px 24px}
+.leader-info a{
+  display:flex;align-items:center;gap:8px;
+  color:var(--muted);font-size:.88rem;margin-bottom:8px;
+  transition:color .2s;
+}
+.leader-info a:hover{color:var(--saffron)}
+.leader-info a i{color:var(--saffron);width:16px}
 
-        .number {
-            background: #333;
-            color: white;
-        }
+/* =========================================================
+   STATS SECTION
+   ========================================================= */
+.stats-section{
+  background:linear-gradient(135deg,var(--dark-ink),var(--mid-ink));
+  position:relative;overflow:hidden;
+}
+.stats-section::before{
+  content:'';position:absolute;inset:0;
+  background:url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Ccircle cx='40' cy='40' r='20'/%3E%3C/g%3E%3C/svg%3E");
+}
+.stat-box{
+  text-align:center;position:relative;z-index:2;
+  padding:40px 20px;
+}
+.stat-number{
+  font-family:'Baloo 2',sans-serif;font-size:clamp(2.2rem,4vw,3.2rem);
+  font-weight:800;color:var(--gold);display:block;line-height:1;
+}
+.stat-label{color:rgba(255,255,255,.7);font-size:.9rem;margin-top:8px;letter-spacing:.5px}
+.stat-icon{font-size:2rem;color:var(--saffron);margin-bottom:12px}
+.stat-divider{
+  width:1px;background:rgba(255,255,255,.1);
+  height:80px;margin:auto;
+}
 
-        @media (max-width: 400px) {
-            .calculator {
-                padding: 15px;
-            }
+/* =========================================================
+   HEAD OFFICE
+   ========================================================= */
+.office-section{background:var(--cream)}
+.office-card{
+  background:var(--card-bg);border-radius:var(--radius-lg);
+  overflow:hidden;box-shadow:var(--shadow-md);
+}
+.office-info{padding:40px}
+.office-info h3{font-family:'Baloo 2',sans-serif;font-weight:800;margin-bottom:24px}
+.office-item{
+  display:flex;gap:16px;margin-bottom:20px;align-items:flex-start;
+}
+.office-item .icon{
+  width:44px;height:44px;background:linear-gradient(135deg,var(--saffron),var(--gold));
+  border-radius:10px;display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:1rem;flex-shrink:0;
+}
+.office-item h6{font-weight:700;margin-bottom:4px;font-size:.9rem}
+.office-item p{color:var(--muted);font-size:.88rem;margin:0}
+.map-container{height:350px;background:#e0e0e0;position:relative;overflow:hidden}
+.map-container iframe{width:100%;height:100%;border:0}
 
-            button {
-                padding: 12px;
-                font-size: 1rem;
-            }
-        }
-    </style>
+/* =========================================================
+   VILLAGE DIRECTORY
+   ========================================================= */
+.directory-section{background:var(--body-bg)}
+.directory-card{
+  background:var(--card-bg);border-radius:var(--radius-lg);
+  padding:48px;box-shadow:var(--shadow-md);
+  border:1px solid var(--border);
+}
+.form-label{font-weight:600;font-size:.9rem;color:var(--dark-ink)}
+.form-control,.form-select{
+  background:var(--body-bg);border:1.5px solid var(--border);
+  color:var(--dark-ink);border-radius:10px;padding:12px 16px;
+  transition:border-color .2s,box-shadow .2s;font-size:.95rem;
+}
+.form-control:focus,.form-select:focus{
+  border-color:var(--saffron);
+  box-shadow:0 0 0 3px rgba(232,93,4,.12);
+  background:var(--card-bg);color:var(--dark-ink);
+}
+.captcha-box{
+  background:linear-gradient(135deg,var(--saffron),var(--deep-saf));
+  color:#fff;border-radius:12px;padding:14px 24px;
+  font-family:'Baloo 2',sans-serif;font-size:1.6rem;font-weight:800;
+  letter-spacing:6px;text-align:center;min-width:140px;
+  user-select:none;position:relative;overflow:hidden;
+}
+.captcha-box::before{
+  content:'';position:absolute;inset:0;
+  background:repeating-linear-gradient(45deg,transparent,transparent 3px,rgba(255,255,255,.05) 3px,rgba(255,255,255,.05) 6px);
+}
+.captcha-noise{position:relative;z-index:1}
+.btn-captcha-refresh{
+  background:none;border:1.5px solid var(--border);
+  color:var(--muted);border-radius:10px;padding:8px 14px;
+  cursor:pointer;transition:all .2s;
+}
+.btn-captcha-refresh:hover{border-color:var(--saffron);color:var(--saffron)}
+.btn-primary-custom{
+  background:linear-gradient(135deg,var(--saffron),var(--deep-saf));
+  color:#fff;border:none;border-radius:12px;
+  padding:13px 32px;font-family:'Baloo 2',sans-serif;
+  font-weight:700;font-size:1rem;transition:all .25s;
+  display:inline-flex;align-items:center;gap:8px;cursor:pointer;
+}
+.btn-primary-custom:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(232,93,4,.4);color:#fff}
+.btn-secondary-custom{
+  background:var(--card-bg);color:var(--dark-ink);
+  border:1.5px solid var(--border);border-radius:12px;
+  padding:12px 28px;font-family:'Baloo 2',sans-serif;
+  font-weight:600;font-size:.95rem;transition:all .25s;
+  display:inline-flex;align-items:center;gap:8px;cursor:pointer;
+}
+.btn-secondary-custom:hover{border-color:var(--saffron);color:var(--saffron)}
+
+/* Village Detail Result */
+#village-result{display:none}
+.village-detail-card{
+  background:var(--card-bg);border-radius:var(--radius-lg);
+  padding:36px;box-shadow:var(--shadow-md);
+  border-top:4px solid var(--saffron);
+}
+.detail-badge{
+  background:linear-gradient(135deg,var(--saffron),var(--gold));
+  color:#fff;padding:4px 14px;border-radius:50px;
+  font-size:.8rem;font-weight:600;
+}
+.info-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:16px;margin:24px 0;
+}
+.info-item{
+  background:var(--body-bg);border-radius:12px;padding:16px;
+  text-align:center;border:1px solid var(--border);
+}
+.info-item strong{
+  font-family:'Baloo 2',sans-serif;font-size:1.6rem;
+  font-weight:800;color:var(--saffron);display:block;
+}
+.info-item span{font-size:.8rem;color:var(--muted)}
+.members-table-wrap{overflow-x:auto;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse}
+thead th{
+  background:linear-gradient(135deg,var(--saffron),var(--deep-saf));
+  color:#fff;padding:14px 16px;font-family:'Baloo 2',sans-serif;
+  font-weight:600;font-size:.88rem;text-align:left;white-space:nowrap;
+}
+tbody tr{border-bottom:1px solid var(--border);transition:background .15s}
+tbody tr:hover{background:rgba(232,93,4,.05)}
+tbody td{padding:12px 16px;font-size:.9rem;color:var(--dark-ink)}
+tbody tr:last-child{border-bottom:none}
+
+/* =========================================================
+   REGISTRATION MODAL
+   ========================================================= */
+.modal-content{
+  background:var(--card-bg);border:1px solid var(--border);
+  border-radius:var(--radius-lg);
+}
+.modal-header{
+  border-bottom:1px solid var(--border);padding:24px 28px;
+}
+.modal-body{padding:28px}
+.modal-footer{border-top:1px solid var(--border);padding:20px 28px}
+.otp-inputs{display:flex;gap:10px;justify-content:center}
+.otp-inputs input{
+  width:48px;height:56px;text-align:center;
+  font-size:1.4rem;font-weight:700;
+  border:2px solid var(--border);border-radius:12px;
+  background:var(--body-bg);color:var(--dark-ink);
+  transition:border-color .2s;
+}
+.otp-inputs input:focus{
+  border-color:var(--saffron);
+  box-shadow:0 0 0 3px rgba(232,93,4,.12);outline:none;
+}
+.step-indicator{
+  display:flex;gap:0;margin-bottom:28px;
+}
+.step{
+  flex:1;display:flex;flex-direction:column;align-items:center;
+  position:relative;
+}
+.step::before{
+  content:'';position:absolute;top:16px;left:50%;right:-50%;
+  height:2px;background:var(--border);z-index:0;
+}
+.step:last-child::before{display:none}
+.step-num{
+  width:32px;height:32px;border-radius:50%;
+  background:var(--border);color:var(--muted);
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;font-size:.85rem;position:relative;z-index:1;
+  transition:all .3s;
+}
+.step.active .step-num{background:var(--saffron);color:#fff}
+.step.done .step-num{background:#22c55e;color:#fff}
+.step-label{font-size:.72rem;color:var(--muted);margin-top:6px;text-align:center}
+.step.active .step-label,.step.done .step-label{color:var(--dark-ink);font-weight:600}
+
+/* =========================================================
+   GALLERY
+   ========================================================= */
+.gallery-section{background:var(--cream)}
+.gallery-filter{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:28px}
+.filter-btn{
+  background:var(--card-bg);border:1.5px solid var(--border);
+  color:var(--muted);border-radius:50px;padding:7px 20px;
+  font-size:.88rem;font-weight:600;cursor:pointer;transition:all .2s;
+}
+.filter-btn.active,.filter-btn:hover{
+  background:var(--saffron);border-color:var(--saffron);color:#fff;
+}
+.gallery-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
+  gap:20px;
+}
+.gallery-item{
+  border-radius:var(--radius);overflow:hidden;
+  aspect-ratio:4/3;background:linear-gradient(135deg,var(--saffron),var(--deep-saf));
+  position:relative;cursor:pointer;
+}
+.gallery-item img{width:100%;height:100%;object-fit:cover;transition:transform .35s}
+.gallery-item:hover img{transform:scale(1.06)}
+.gallery-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(0deg,rgba(0,0,0,.6) 0%,transparent 60%);
+  opacity:0;transition:opacity .3s;
+  display:flex;align-items:flex-end;padding:16px;
+}
+.gallery-item:hover .gallery-overlay{opacity:1}
+.gallery-overlay span{color:#fff;font-size:.88rem;font-weight:600}
+/* Placeholder gallery items */
+.gallery-placeholder{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:12px;color:rgba(255,255,255,.6);font-size:.85rem;
+}
+.gallery-placeholder i{font-size:2.5rem}
+
+/* =========================================================
+   CONTACT SECTION
+   ========================================================= */
+.contact-section{background:var(--body-bg)}
+.contact-info-card{
+  background:linear-gradient(135deg,var(--dark-ink),var(--mid-ink));
+  border-radius:var(--radius-lg);padding:40px;color:#fff;height:100%;
+}
+.contact-info-card h3{font-family:'Baloo 2',sans-serif;font-weight:800;margin-bottom:24px;color:#fff}
+.contact-item{
+  display:flex;gap:16px;margin-bottom:24px;align-items:flex-start;
+}
+.contact-item .icon{
+  width:44px;height:44px;
+  background:rgba(232,93,4,.25);border:1px solid rgba(232,93,4,.5);
+  border-radius:10px;display:flex;align-items:center;justify-content:center;
+  color:var(--gold);font-size:1.1rem;flex-shrink:0;
+}
+.contact-item h6{color:rgba(255,255,255,.6);font-size:.78rem;margin-bottom:4px;font-weight:500}
+.contact-item p{color:#fff;margin:0;font-size:.93rem}
+.contact-form-card{
+  background:var(--card-bg);border-radius:var(--radius-lg);
+  padding:40px;box-shadow:var(--shadow-md);border:1px solid var(--border);
+}
+.contact-form-card h3{font-family:'Baloo 2',sans-serif;font-weight:800;margin-bottom:24px}
+
+/* =========================================================
+   FEEDBACK SECTION
+   ========================================================= */
+.feedback-section{background:var(--cream)}
+.feedback-frame-wrap{
+  background:var(--card-bg);border-radius:var(--radius-lg);
+  overflow:hidden;box-shadow:var(--shadow-md);
+  border:1px solid var(--border);
+}
+.feedback-frame-wrap iframe{width:100%;border:0;display:block}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+footer{
+  background:var(--dark-ink);color:rgba(255,255,255,.7);
+  padding:60px 0 0;
+}
+.footer-brand{font-family:'Baloo 2',sans-serif;font-size:1.4rem;font-weight:800;color:#fff;margin-bottom:12px}
+.footer-desc{font-size:.88rem;line-height:1.7;max-width:280px;margin-bottom:24px}
+.footer-social{display:flex;gap:10px}
+.social-btn{
+  width:36px;height:36px;border-radius:50%;
+  background:rgba(255,255,255,.1);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.9rem;transition:all .2s;
+}
+.social-btn:hover{background:var(--saffron);color:#fff}
+.footer-title{
+  font-family:'Baloo 2',sans-serif;font-weight:700;
+  color:#fff;font-size:1rem;margin-bottom:16px;
+}
+.footer-links{list-style:none;padding:0;margin:0}
+.footer-links li{margin-bottom:10px}
+.footer-links a{
+  color:rgba(255,255,255,.6);font-size:.88rem;
+  transition:color .2s;display:flex;align-items:center;gap:6px;
+}
+.footer-links a:hover{color:var(--gold)}
+.footer-links a::before{content:'›';color:var(--saffron)}
+.footer-bottom{
+  background:rgba(0,0,0,.3);margin-top:48px;
+  padding:16px 0;text-align:center;font-size:.82rem;
+}
+.footer-bottom a{color:var(--gold)}
+
+/* =========================================================
+   FLOATING BUTTONS
+   ========================================================= */
+.float-group{
+  position:fixed;bottom:28px;right:24px;
+  display:flex;flex-direction:column;gap:12px;z-index:1000;
+}
+.float-btn{
+  width:52px;height:52px;border-radius:50%;border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.3rem;transition:all .25s;box-shadow:0 4px 20px rgba(0,0,0,.2);
+}
+.float-whatsapp{background:#25D366;color:#fff}
+.float-whatsapp:hover{transform:scale(1.1);box-shadow:0 6px 24px rgba(37,211,102,.4)}
+.float-top{background:var(--saffron);color:#fff}
+.float-top:hover{transform:scale(1.1)}
+.float-dark{background:var(--mid-ink);color:#fff}
+.float-dark:hover{transform:scale(1.1)}
+
+/* =========================================================
+   TOAST
+   ========================================================= */
+.toast-container{position:fixed;top:80px;right:20px;z-index:9999}
+
+/* =========================================================
+   LOADING SPINNER
+   ========================================================= */
+.spinner-saffron{color:var(--saffron)}
+.loading-overlay{
+  display:flex;align-items:center;justify-content:center;
+  padding:40px;color:var(--muted);gap:12px;
+}
+
+/* =========================================================
+   REGISTRATION FLOW EXTRAS
+   ========================================================= */
+.otp-timer{color:var(--muted);font-size:.85rem;text-align:center;margin-top:8px}
+.otp-timer strong{color:var(--saffron)}
+.demo-otp-badge{
+  background:rgba(34,197,94,.1);border:1px solid #22c55e;
+  color:#16a34a;border-radius:8px;padding:8px 16px;
+  font-size:.85rem;text-align:center;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media(max-width:992px){
+  .hero-img-side{margin-top:48px}
+  .stat-divider{display:none}
+}
+@media(max-width:768px){
+  section{padding:56px 0}
+  .directory-card{padding:24px}
+  .hero-stats{gap:20px}
+  .hero-stats strong{font-size:1.4rem}
+  .office-info{padding:24px}
+  .contact-info-card,.contact-form-card{padding:24px}
+  .leader-photo{width:80px;height:80px;font-size:2rem}
+}
+@media(max-width:480px){
+  .otp-inputs input{width:40px;height:48px;font-size:1.1rem}
+}
+
+/* =========================================================
+   PAGINATION
+   ========================================================= */
+.pagination .page-link{
+  background:var(--card-bg);border-color:var(--border);
+  color:var(--dark-ink);border-radius:8px !important;
+  margin:0 2px;transition:all .2s;
+}
+.pagination .page-link:hover,.pagination .page-item.active .page-link{
+  background:var(--saffron);border-color:var(--saffron);color:#fff;
+}
+
+/* Dark mode form control fix */
+[data-theme="dark"] .form-control,
+[data-theme="dark"] .form-select{background:var(--card-bg);color:var(--dark-ink)}
+[data-theme="dark"] .form-control::placeholder{color:var(--muted)}
+</style>
 </head>
 
 <body>
 
-<div class="calculator">
-    <div id="display" class="display">0</div>
-
-    <div class="buttons">
-        <button class="clear" onclick="clearDisplay()">C</button>
-        <button class="operator" onclick="append('/')">÷</button>
-        <button class="operator" onclick="append('*')">×</button>
-        <button class="operator" onclick="append('-')">−</button>
-
-        <button class="number" onclick="append('7')">7</button>
-        <button class="number" onclick="append('8')">8</button>
-        <button class="number" onclick="append('9')">9</button>
-        <button class="operator" onclick="append('+')">+</button>
-
-        <button class="number" onclick="append('4')">4</button>
-        <button class="number" onclick="append('5')">5</button>
-        <button class="number" onclick="append('6')">6</button>
-        <button class="operator" onclick="append('**')">x²</button>
-        
-
-        <button class="number" onclick="append('1')">1</button>
-        <button class="number" onclick="append('2')">2</button>
-        <button class="number" onclick="append('3')">3</button>
-        <button class="operator" onclick="append('/100')">%</button>
-
-
-        <button class="number" onclick="append('0')">0</button>
-        <button class="number" onclick="append('.')">.</button>
-        <button class="equal" onclick="calculate()">=</button>
-
+<!-- ═══════════════════════════════════════════════════════
+     NAVBAR
+═══════════════════════════════════════════════════════ -->
+<nav class="navbar navbar-expand-lg sticky-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand" href="#home">
+      <div class="brand-icon"><i class="fas fa-om"></i></div>
+      <div>
+        <span>पटेल समाज</span>
+        <div style="font-size:.7rem;opacity:.7;font-weight:400;letter-spacing:.5px">INDORE DISTRICT</div>
+      </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav ms-auto align-items-lg-center gap-1">
+        <li class="nav-item"><a class="nav-link" href="#home"><i class="fas fa-home me-1"></i>Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#about"><i class="fas fa-info-circle me-1"></i>About</a></li>
+        <li class="nav-item"><a class="nav-link" href="#leaders"><i class="fas fa-users me-1"></i>Leaders</a></li>
+        <li class="nav-item"><a class="nav-link" href="#directory"><i class="fas fa-map-marker-alt me-1"></i>Directory</a></li>
+        <li class="nav-item"><a class="nav-link" href="#gallery"><i class="fas fa-images me-1"></i>Gallery</a></li>
+        <li class="nav-item"><a class="nav-link" href="#contact"><i class="fas fa-envelope me-1"></i>Contact</a></li>
+        <li class="nav-item"><a class="nav-link" href="#feedback"><i class="fas fa-comment me-1"></i>Feedback</a></li>
+        <li class="nav-item ms-lg-2">
+          <a class="nav-link" href="admin/index.php" style="border:1.5px solid rgba(244,162,97,.4);border-radius:8px;padding:7px 16px !important">
+            <i class="fas fa-shield-alt me-1" style="color:var(--gold)"></i>Admin
+          </a>
+        </li>
+        <li class="nav-item">
+          <button class="btn-captcha-refresh ms-2" id="themeToggle" title="Toggle Dark Mode" style="border:1.5px solid rgba(255,255,255,.2);color:#fff;border-radius:8px;padding:7px 12px">
+            <i class="fas fa-moon"></i>
+          </button>
+        </li>
+      </ul>
     </div>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════
+     HERO
+═══════════════════════════════════════════════════════ -->
+<section class="hero" id="home">
+  <div class="hero-orb orb1"></div>
+  <div class="hero-orb orb2"></div>
+  <div class="container hero-content">
+    <div class="row align-items-center">
+      <div class="col-lg-6" data-aos="fade-right">
+        <div class="hero-badge"><i class="fas fa-star"></i> Official Community Portal</div>
+        <h1>पटेल <span>समाज</span></h1>
+        <div class="hero-district"><i class="fas fa-map-marker-alt me-2" style="color:var(--gold)"></i>Indore District, Madhya Pradesh</div>
+        <p class="hero-desc">Connecting our community across villages, preserving traditions, empowering the future. Your trusted district-level portal for community information and leadership.</p>
+        <div class="d-flex flex-wrap gap-3">
+          <a href="#directory" class="btn-hero"><i class="fas fa-search"></i> Village Directory</a>
+          <button class="btn-hero-outline" onclick="showRegistrationModal()"><i class="fas fa-user-plus"></i> Join Community</button>
+        </div>
+        <div class="hero-stats" id="heroStats">
+          <div class="hero-stat"><strong id="h-villages">-</strong><span>Villages</span></div>
+          <div class="hero-stat"><strong id="h-members">-</strong><span>Members</span></div>
+          <div class="hero-stat"><strong id="h-families">-</strong><span>Families</span></div>
+        </div>
+      </div>
+      <div class="col-lg-6 hero-img-side" data-aos="fade-left" data-aos-delay="200">
+        <div class="hero-card-float">
+          <div style="font-size:3rem;margin-bottom:12px">🏘️</div>
+          <div style="font-family:'Baloo 2',sans-serif;font-weight:800;font-size:1.4rem;margin-bottom:4px">पटेल समाज</div>
+          <div style="opacity:.7;font-size:.85rem;margin-bottom:20px">Indore District Community</div>
+          <div class="hero-icon-grid">
+            <div class="hero-icon-item"><i class="fas fa-village"></i><span>Village<br>Directory</span></div>
+            <div class="hero-icon-item"><i class="fas fa-users"></i><span>Member<br>Registry</span></div>
+            <div class="hero-icon-item"><i class="fas fa-award"></i><span>District<br>Leaders</span></div>
+            <div class="hero-icon-item"><i class="fas fa-chart-bar"></i><span>Community<br>Stats</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════
+     ABOUT
+═══════════════════════════════════════════════════════ -->
+<section class="about-section" id="about">
+  <div class="container">
+    <div class="row mb-5 align-items-end">
+      <div class="col-lg-6" data-aos="fade-right">
+        <div class="section-eyebrow"><span>Who We Are</span></div>
+        <h2 class="section-title">About <span class="text-saffron">Patel Samaj</span></h2>
+        <div class="divider"></div>
+        <p class="section-sub">The Patel Samaj of Indore District is a vibrant community united by shared heritage, values, and a common goal of social upliftment. With deep roots in agriculture, trade, and education, we are committed to the welfare of every member.</p>
+      </div>
+      <div class="col-lg-6 text-lg-end mt-4 mt-lg-0" data-aos="fade-left">
+        <div style="background:linear-gradient(135deg,rgba(232,93,4,.08),rgba(244,162,97,.08));border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px 32px;display:inline-block">
+          <p style="font-size:1.1rem;font-style:italic;color:var(--muted);margin:0;line-height:1.8">"समाज की शक्ति एकता में है, एकता की शक्ति संगठन में है।"<br><small style="font-style:normal;font-size:.85rem">— Community Motto</small></p>
+        </div>
+      </div>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="0">
+        <div class="about-card">
+          <div class="icon"><i class="fas fa-history"></i></div>
+          <h5>Rich History</h5>
+          <p>Tracing our roots back centuries, the Patel community has been the backbone of agriculture and trade in Malwa region, Madhya Pradesh.</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
+        <div class="about-card">
+          <div class="icon"><i class="fas fa-bullseye"></i></div>
+          <h5>Our Mission</h5>
+          <p>To empower every community member with access to information, resources, and opportunities that enhance their quality of life.</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="200">
+        <div class="about-card">
+          <div class="icon"><i class="fas fa-hands-helping"></i></div>
+          <h5>Social Activities</h5>
+          <p>Organizing blood donation camps, scholarship drives, skill development programs, and cultural festivals throughout the year.</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
+        <div class="about-card">
+          <div class="icon"><i class="fas fa-eye"></i></div>
+          <h5>Our Vision</h5>
+          <p>A digitally connected, educationally advanced, and economically prosperous Patel community across all villages of Indore District.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════
+     COMMUNITY STATS
+═══════════════════════════════════════════════════════ -->
+<section class="stats-section">
+  <div class="container">
+    <div class="row g-0 justify-content-center">
+      <div class="col-6 col-lg-2" data-aos="zoom-in" data-aos-delay="0">
+        <div class="stat-box">
+          <div class="stat-icon"><i class="fas fa-map-marked-alt"></i></div>
+          <strong class="stat-number counter" data-target="0" id="stat-villages">0</strong>
+          <div class="stat-label">Total Villages</div>
+        </div>
+      </div>
+      <div class="col-6 col-lg-2" data-aos="zoom-in" data-aos-delay="100">
+        <div class="stat-box">
+          <div class="stat-icon"><i class="fas fa-home"></i></div>
+          <strong class="stat-number counter" data-target="0" id="stat-houses">0</strong>
+          <div class="stat-label">Total Houses</div>
+        </div>
+      </div>
+      <div class="col-6 col-lg-2" data-aos="zoom-in" data-aos-delay="200">
+        <div class="stat-box">
+          <div class="stat-icon"><i class="fas fa-family"></i></div>
+          <strong class="stat-number counter" data-target="0" id="stat-families">0</strong>
+          <div class="stat-label">Total Families</div>
+        </div>
+      </div>
+      <div class="col-6 col-lg-2" data-aos="zoom-in" data-aos-delay="300">
+        <div class="stat-box">
+          <div class="stat-icon"><i class="fas fa-users"></i></div>
+          <strong class="stat-number counter" data-target="0" id="stat-members">0</strong>
+          <div class="stat-label">Total Members</div>
+        </div>
+      </div>
+      <div class="col-6 col-lg-2" data-aos="zoom-in" data-aos-delay="400">
+        <div class="stat-box">
+          <div class="stat-icon"><i class="fas fa-award"></i></div>
+          <strong class="stat-number counter" data-target="0" id="stat-leaders">0</strong>
+          <div class="stat-label">Office Bearers</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════
+     LEADERS
+═══════════════════════════════════════════════════════ -->
+<section class="leaders-section" id="leaders">
+  <div class="container">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <div class="section-eyebrow justify-content-center"><span>District Leadership</span></div>
+      <h2 class="section-title">Our <span class="text-saffron">Office Bearers</span></h2>
+      <div class="divider mx-auto"></div>
+      <p class="section-sub mx-auto text-center">Meet the dedicated leaders who guide our community with vision, integrity, and commitment.</p>
+    </div>
+    <div class="row g-4 justify-content-center" id="leadersGrid">
+      <!-- Loaded dynamically -->
+      <div class="col-12 text-center py-5">
+        <div class="spinner-border spinner-saffron"></div>
+        <div class="mt-2 text-muted">Loading leaders...</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════
+     HEAD OFFICE
+═══════════════════════════════════════════════════════ -->
+<section class="office-section" id="office">
+  <div class="container">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <div class="section-eyebrow justify-content-center"><span>Head Office</span></div>
+      <h2 class="section-title">Community <span class="text-saffron">Head Office</span></h2>
+      <div class="divider mx-auto"></div>
+    </div>
+    <div class="row g-0" data-aos="fade-up">
+      <div class="col-lg-5">
+        <div class="office-card h-100">
+          <div class="office-info">
+            <h3><i class="fas fa-building text-saffron me-2"></i>Patel Samaj Bhawan</h3>
+            <div class="office-item">
+              <div class="icon"><i class="fas fa-map-marker-alt"></i></div>
+              <div>
+                <h6>Address</h6>
+                <p>Patel Samaj Bhawan, Near Rajwada,<br>Indore - 452001, Madhya Pradesh</p>
+              </div>
+            </div>
+            <div class="office-item">
+              <div class="icon"><i class="fas fa-phone"></i></div>
+              <div>
+                <h6>Phone</h6>
+                <p><a href="tel:+910731234567" class="text-saffron">+91 0731-234567</a></p>
+              </div>
+            </div>
+            <div class="office-item">
+              <div class="icon"><i class="fas fa-envelope"></i></div>
+              <div>
+                <h6>Email</h6>
+                <p><a href="mailto:info@patelsamaj-indore.org" class="text-saffron">info@patelsamaj-indore.org</a></p>
+              </div>
+            </div>
+            <div class="office-item">
+              <div class="icon"><i class="fas fa-clock"></i></div>
+              <div>
+                <h6>Office Hours</h6>
+                <p>Monday – Saturday: 10:00 AM – 6:00 PM</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-7">
+        <div class="map-container">
+          <iframe src="https://maps.google.com/maps?q=Rajwada+Indore+Madhya+Pradesh&output=embed" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════
+     VILLAGE DIRECTORY
+═══════════════════════════════════════════════════════ -->
+<section class="directory-section" id="directory">
+  <div class="container">
+    <div class="row mb-5 align-items-end" data-aos="fade-up">
+      <div class="col-lg-6">
+        <div class="section-eyebrow"><span>Search</span></div>
+        <h2 class="section-title">Village <span class="text-saffron">Directory</span></h2>
+        <div class="divider"></div>
+        <p class="section-sub">Select your district and village to view detailed community information, leadership, and member list.</p>
+      </div>
+      <div class="col-lg-6 text-lg-end mt-3 mt-lg-0">
+        <button class="btn-primary-custom" onclick="showRegistrationModal()">
+          <i class="fas fa-user-plus"></i> Register as Member
+        </button>
+      </div>
+    </div>
+
+    <div class="directory-card" data-aos="fade-up">
+      <div class="row g-4 align-items-end">
+        <!-- District -->
+        <div class="col-md-4">
+          <label class="form-label"><i class="fas fa-map text-saffron me-1"></i> Select District</label>
+          <select class="form-select" id="districtSelect" onchange="loadVillages()">
+            <option value="">-- Select District --</option>
+          </select>
+        </div>
+        <!-- Village -->
+        <div class="col-md-4">
+          <label class="form-label"><i class="fas fa-home text-saffron me-1"></i> Select Village</label>
+          <select class="form-select" id="villageSelect" disabled>
+            <option value="">-- Select Village --</option>
+          </select>
+        </div>
+        <!-- Captcha -->
+        <div class="col-md-4">
+          <label class="form-label"><i class="fas fa-shield-alt text-saffron me-1"></i> Verify: <span id="captchaQuestion" class="text-saffron fw-bold"></span></label>
+          <div class="d-flex gap-2 align-items-center">
+            <input type="number" class="form-control" id="captchaAnswer" placeholder="Your answer" style="max-width:120px"/>
+            <button class="btn-captcha-refresh" onclick="generateCaptcha()" title="New CAPTCHA">
+              <i class="fas fa-sync-alt"></i>
+            </button>
+          </div>
+        </div>
+        <!-- Go Button -->
+        <div class="col-12 d-flex flex-wrap gap-3 align-items-center">
+          <button class="btn-primary-custom" onclick="searchVillage()">
+            <i class="fas fa-search"></i> GO — Search Village
+          </button>
+          <button class="btn-secondary-custom" onclick="resetDirectory()">
+            <i class="fas fa-redo"></i> Reset
+          </button>
+          <span id="captchaError" class="text-danger fw-semibold d-none"><i class="fas fa-exclamation-circle me-1"></i>Incorrect captcha. Try again.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Village Result -->
+    <div id="village-result" class="mt-4" data-aos="fade-up">
+      <div class="village-detail-card">
+        <div class="d-flex flex-wrap justify-content-between align-items-start mb-4 gap-3">
+          <div>
+            <span class="detail-badge mb-2 d-inline-block">Village Details</span>
+            <h3 class="section-title mb-1" id="vd-name">-</h3>
+            <div style="color:var(--muted);font-size:.9rem">
+              <i class="fas fa-map-marker-alt text-saffron me-1"></i>
+              <span id="vd-district">-</span> &nbsp;|&nbsp;
+              <i class="fas fa-map text-saffron me-1"></i>
+              <span id="vd-taluka">-</span>
+            </div>
+          </div>
+          <div class="d-flex flex-wrap gap-2">
+            <button class="btn-secondary-custom" onclick="exportPDF()"><i class="fas fa-file-pdf text-danger"></i> PDF</button>
+            <button class="btn-secondary-custom" onclick="exportExcel()"><i class="fas fa-file-excel text-success"></i> Excel</button>
+            <button class="btn-secondary-custom" onclick="window.print()"><i class="fas fa-print text-saffron"></i> Print</button>
+          </div>
+        </div>
+
+        <!-- Village Head -->
+        <div class="alert" style="background:rgba(232,93,4,.08);border:1px solid rgba(232,93,4,.2);border-radius:12px;padding:20px">
+          <div class="row align-items-center">
+            <div class="col-auto">
+              <div style="width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--saffron),var(--gold));display:flex;align-items:center;justify-content:center;font-size:1.4rem;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:800" id="vd-head-initial">?</div>
+            </div>
+            <div class="col">
+              <div style="font-size:.78rem;color:var(--muted);font-weight:600;letter-spacing:.5px;text-transform:uppercase">Village Head</div>
+              <div style="font-family:'Baloo 2',sans-serif;font-weight:700;font-size:1.1rem" id="vd-head">-</div>
+              <div style="font-size:.88rem;color:var(--muted)" id="vd-head-designation">-</div>
+            </div>
+            <div class="col-auto">
+              <a href="#" id="vd-head-tel" class="btn-primary-custom" style="padding:10px 20px;font-size:.88rem">
+                <i class="fas fa-phone"></i> <span id="vd-head-mobile">-</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="info-grid mt-4" id="vd-stats-grid">
+          <!-- Populated by JS -->
+        </div>
+
+        <!-- Members Table -->
+        <div class="mt-4">
+          <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-3">
+            <h5 style="font-family:'Baloo 2',sans-serif;font-weight:700;margin:0">
+              <i class="fas fa-list text-saffron me-2"></i>Members List
+            </h5>
+            <input type="text" class="form-control" id="memberSearch" placeholder="Search members..." style="max-width:260px" oninput="filterMembers()"/>
+          </div>
+          <div class="members-table-wrap">
+            <table id="membersTable">
+              <thead>
+                <tr>
+                  <th>Sr. No.</th><th>Name</th><th>Father's Name</th><th>Mobile</th><th>Occupation</th>
+                </tr>
+              </thead>
+              <tbody id="membersBody"></tbody>
+            </table>
+          </div>
+          <!-- Pagination -->
+          <nav class="mt-3"><ul class="pagination justify-content-center flex-wrap" id="membersPagination"></ul></nav>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════
+     GALLERY
+═══════════════════════════════════════════════════════ -->
+<section class="gallery-section" id="gallery">
+  <div class="container">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <div class="section-eyebrow justify-content-center"><span>Photo Gallery</span></div>
+      <h2 class="section-title">Community <span class="text-saffron">Gallery</span></h2>
+      <div class="divider mx-auto"></div>
+    </div>
+    <div class="gallery-filter justify-content-center d-flex flex-wrap" data-aos="fade-up">
+      <button class="filter-btn active" onclick="filterGallery(this,'All')">All Photos</button>
+      <button class="filter-btn" onclick="filterGallery(this,'Events')">Events</button>
+      <button class="filter-btn" onclick="filterGallery(this,'Meetings')">Meetings</button>
+      <button class="filter-btn" onclick="filterGallery(this,'Cultural')">Cultural</button>
+      <button class="filter-btn" onclick="filterGallery(this,'Social')">Social</button>
+    </div>
+    <div class="gallery-grid" id="galleryGrid" data-aos="fade-up">
+      <!-- Placeholder items -->
+      <script>
+        const galleryPlaceholders = [
+          {cat:'Events',icon:'fa-calendar-check',label:'Annual Meeting 2024'},
+          {cat:'Cultural',icon:'fa-drum',label:'Cultural Festival'},
+          {cat:'Social',icon:'fa-heart',label:'Blood Donation Camp'},
+          {cat:'Meetings',icon:'fa-users',label:'District Meeting'},
+          {cat:'Events',icon:'fa-award',label:'Awards Ceremony'},
+          {cat:'Social',icon:'fa-graduation-cap',label:'Scholarship Drive'},
+          {cat:'Cultural',icon:'fa-music',label:'Navratri Celebration'},
+          {cat:'Meetings',icon:'fa-handshake',label:'Leader Summit'},
+          {cat:'Social',icon:'fa-tree',label:'Tree Plantation'},
+        ];
+        document.addEventListener('DOMContentLoaded', function(){
+          const grid = document.getElementById('galleryGrid');
+          const colors = ['#E85D04','#C44B00','#2D3A4A','#1A1A2E','#F4A261'];
+          grid.innerHTML = galleryPlaceholders.map((item,i)=>`
+            <a class="gallery-item glightbox" href="#" data-gallery="community" data-category="${item.cat}"
+               style="background:linear-gradient(135deg,${colors[i%colors.length]},${colors[(i+1)%colors.length]})"
+               onclick="return false">
+              <div class="gallery-placeholder">
+                <i class="fas ${item.icon}"></i>
+                <span>${item.label}</span>
+                <small style="opacity:.6">${item.cat}</small>
+              </div>
+              <div class="gallery-overlay"><span><i class="fas fa-expand me-1"></i>${item.label}</span></div>
+            </a>
+          `).join('');
+        });
+      </script>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════
+     CONTACT
+═══════════════════════════════════════════════════════ -->
+<section class="contact-section" id="contact">
+  <div class="container">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <div class="section-eyebrow justify-content-center"><span>Get In Touch</span></div>
+      <h2 class="section-title">Contact <span class="text-saffron">Us</span></h2>
+      <div class="divider mx-auto"></div>
+    </div>
+    <div class="row g-4">
+      <div class="col-lg-5" data-aos="fade-right">
+        <div class="contact-info-card">
+          <h3>We'd Love to Hear From You</h3>
+          <div class="contact-item">
+            <div class="icon"><i class="fas fa-phone"></i></div>
+            <div><h6>Phone</h6><p>+91 0731-234567<br>+91 98765-43210</p></div>
+          </div>
+          <div class="contact-item">
+            <div class="icon"><i class="fas fa-envelope"></i></div>
+            <div><h6>Email</h6><p>info@patelsamaj-indore.org</p></div>
+          </div>
+          <div class="contact-item">
+            <div class="icon"><i class="fas fa-map-marker-alt"></i></div>
+            <div><h6>Address</h6><p>Patel Samaj Bhawan,<br>Near Rajwada, Indore – 452001, MP</p></div>
+          </div>
+          <div class="contact-item">
+            <div class="icon"><i class="fab fa-whatsapp"></i></div>
+            <div><h6>WhatsApp</h6><p><a href="https://wa.me/919876543210" style="color:#25D366">+91 98765-43210</a></p></div>
+          </div>
+          <div class="footer-social mt-4">
+            <a href="#" class="social-btn"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-btn"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-btn"><i class="fab fa-youtube"></i></a>
+            <a href="#" class="social-btn"><i class="fab fa-twitter"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-7" data-aos="fade-left">
+        <div class="contact-form-card">
+          <h3>Send a Message</h3>
+          <form id="contactForm" onsubmit="submitContact(event)">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Your Name *</label>
+                <input type="text" class="form-control" id="cf-name" placeholder="Full Name" required/>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Mobile Number</label>
+                <input type="tel" class="form-control" id="cf-mobile" placeholder="+91 XXXXX XXXXX"/>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Email Address</label>
+                <input type="email" class="form-control" id="cf-email" placeholder="your@email.com"/>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Subject</label>
+                <input type="text" class="form-control" id="cf-subject" placeholder="How can we help?"/>
+              </div>
+              <div class="col-12">
+                <label class="form-label">Message *</label>
+                <textarea class="form-control" id="cf-message" rows="5" placeholder="Write your message here..." required></textarea>
+              </div>
+              <div class="col-12">
+                <button type="submit" class="btn-primary-custom w-100 justify-content-center">
+                  <i class="fas fa-paper-plane"></i> Send Message
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════
+     FEEDBACK
+═══════════════════════════════════════════════════════ -->
+<section class="feedback-section" id="feedback">
+  <div class="container">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <div class="section-eyebrow justify-content-center"><span>Feedback</span></div>
+      <h2 class="section-title">Community <span class="text-saffron">Feedback</span></h2>
+      <div class="divider mx-auto"></div>
+      <p class="section-sub mx-auto text-center">We value your feedback. Please share your thoughts to help us serve better.</p>
+    </div>
+    <div class="feedback-frame-wrap" data-aos="fade-up">
+      <div style="background:linear-gradient(135deg,var(--saffron),var(--deep-saf));padding:20px 28px;display:flex;align-items:center;gap:12px">
+        <i class="fas fa-comment-dots" style="color:#fff;font-size:1.3rem"></i>
+        <span style="color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:1.05rem">Share Your Feedback</span>
+      </div>
+      <!-- Replace GOOGLE_FORM_LINK with actual URL -->
+      <div style="padding:48px;text-align:center;color:var(--muted)">
+        <i class="fas fa-external-link-alt fa-3x mb-3" style="color:var(--saffron)"></i>
+        <h5 style="font-family:'Baloo 2',sans-serif">Google Feedback Form</h5>
+        <p>Replace <code>GOOGLE_FORM_LINK</code> in the HTML with your Google Form embed URL to display the form here.</p>
+        <!-- Example embed: <iframe src="GOOGLE_FORM_LINK" width="100%" height="600" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe> -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════════════════════ -->
+<footer>
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-lg-4 col-md-6">
+        <div class="footer-brand"><i class="fas fa-om me-2" style="color:var(--saffron)"></i>पटेल समाज</div>
+        <p class="footer-desc">Indore District Patel Samaj Community Portal — your trusted source for community information, leadership details, and village directory.</p>
+        <div class="footer-social">
+          <a href="#" class="social-btn"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="social-btn"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="social-btn"><i class="fab fa-youtube"></i></a>
+          <a href="#" class="social-btn"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+      <div class="col-lg-2 col-md-6">
+        <div class="footer-title">Quick Links</div>
+        <ul class="footer-links">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#leaders">Leaders</a></li>
+          <li><a href="#directory">Village Directory</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-3 col-md-6">
+        <div class="footer-title">Community Services</div>
+        <ul class="footer-links">
+          <li><a href="#directory">Village Search</a></li>
+          <li><a href="#" onclick="showRegistrationModal()">Member Registration</a></li>
+          <li><a href="#feedback">Submit Feedback</a></li>
+          <li><a href="admin/index.php">Admin Login</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-3 col-md-6">
+        <div class="footer-title">Contact Info</div>
+        <ul class="footer-links">
+          <li><a href="tel:+910731234567"><i class="fas fa-phone me-1"></i>+91 0731-234567</a></li>
+          <li><a href="mailto:info@patelsamaj-indore.org"><i class="fas fa-envelope me-1"></i>info@patelsamaj.org</a></li>
+          <li><a href="#office"><i class="fas fa-map-marker-alt me-1"></i>Patel Samaj Bhawan, Indore</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="container">
+      <span>© 2024 Patel Samaj Indore District. All Rights Reserved. | Designed with <i class="fas fa-heart text-saffron"></i> for our community</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════════════════════════════════
+     FLOATING BUTTONS
+═══════════════════════════════════════════════════════ -->
+<div class="float-group">
+  <button class="float-btn float-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to Top"><i class="fas fa-arrow-up"></i></button>
+  <a href="https://wa.me/919876543210" target="_blank" class="float-btn float-whatsapp" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
 </div>
 
+<!-- ═══════════════════════════════════════════════════════
+     REGISTRATION MODAL
+═══════════════════════════════════════════════════════ -->
+<div class="modal fade" id="registrationModal" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div>
+          <h5 class="modal-title" style="font-family:'Baloo 2',sans-serif;font-weight:800;margin:0">
+            <i class="fas fa-user-plus text-saffron me-2"></i>Community Member Registration
+          </h5>
+          <div style="font-size:.8rem;color:var(--muted);margin-top:4px">Verify your mobile number to complete registration</div>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+
+        <!-- Step Indicator -->
+        <div class="step-indicator">
+          <div class="step active" id="step-ind-1">
+            <div class="step-num">1</div>
+            <div class="step-label">Mobile</div>
+          </div>
+          <div class="step" id="step-ind-2">
+            <div class="step-num">2</div>
+            <div class="step-label">Verify OTP</div>
+          </div>
+          <div class="step" id="step-ind-3">
+            <div class="step-num">3</div>
+            <div class="step-label">Fill Details</div>
+          </div>
+          <div class="step" id="step-ind-4">
+            <div class="step-num">4</div>
+            <div class="step-label">Done</div>
+          </div>
+        </div>
+
+        <!-- STEP 1: Mobile -->
+        <div id="reg-step1">
+          <div class="text-center mb-4">
+            <div style="font-size:3rem;margin-bottom:12px">📱</div>
+            <h5 style="font-family:'Baloo 2',sans-serif;font-weight:700">Enter Your Mobile Number</h5>
+            <p style="color:var(--muted);font-size:.9rem">An OTP will be sent to your mobile for verification</p>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Mobile Number *</label>
+            <div class="d-flex gap-2">
+              <span class="form-control" style="max-width:70px;text-align:center;background:var(--body-bg)">+91</span>
+              <input type="tel" class="form-control" id="reg-mobile" placeholder="10-digit mobile number" maxlength="10" oninput="this.value=this.value.replace(/\D/g,'')"/>
+            </div>
+          </div>
+          <button class="btn-primary-custom w-100 justify-content-center" onclick="sendOTP()">
+            <i class="fas fa-paper-plane"></i> Send OTP
+          </button>
+        </div>
+
+        <!-- STEP 2: OTP -->
+        <div id="reg-step2" style="display:none">
+          <div class="text-center mb-4">
+            <div style="font-size:3rem;margin-bottom:12px">🔐</div>
+            <h5 style="font-family:'Baloo 2',sans-serif;font-weight:700">Enter OTP</h5>
+            <p style="color:var(--muted);font-size:.9rem">6-digit OTP sent to <strong id="otp-mobile-display" class="text-saffron"></strong></p>
+          </div>
+          <div id="demo-otp-display" class="demo-otp-badge mb-3 d-none">
+            <i class="fas fa-info-circle me-1"></i> Demo OTP: <strong id="demo-otp-value"></strong> (Remove in production)
+          </div>
+          <div class="otp-inputs mb-3">
+            <input type="text" maxlength="1" class="otp-digit" data-idx="0" oninput="otpInput(this)" onkeydown="otpKeydown(event,this)"/>
+            <input type="text" maxlength="1" class="otp-digit" data-idx="1" oninput="otpInput(this)" onkeydown="otpKeydown(event,this)"/>
+            <input type="text" maxlength="1" class="otp-digit" data-idx="2" oninput="otpInput(this)" onkeydown="otpKeydown(event,this)"/>
+            <input type="text" maxlength="1" class="otp-digit" data-idx="3" oninput="otpInput(this)" onkeydown="otpKeydown(event,this)"/>
+            <input type="text" maxlength="1" class="otp-digit" data-idx="4" oninput="otpInput(this)" onkeydown="otpKeydown(event,this)"/>
+            <input type="text" maxlength="1" class="otp-digit" data-idx="5" oninput="otpInput(this)" onkeydown="otpKeydown(event,this)"/>
+          </div>
+          <div class="otp-timer">Resend OTP in <strong id="otpTimer">2:00</strong></div>
+          <button class="btn-primary-custom w-100 justify-content-center mt-3" onclick="verifyOTP()">
+            <i class="fas fa-check-circle"></i> Verify OTP
+          </button>
+          <div class="text-center mt-2">
+            <button class="btn-secondary-custom" style="padding:8px 18px;font-size:.82rem" onclick="goToStep(1)">
+              <i class="fas fa-arrow-left"></i> Change Number
+            </button>
+          </div>
+        </div>
+
+        <!-- STEP 3: Registration Form -->
+        <div id="reg-step3" style="display:none">
+          <h5 style="font-family:'Baloo 2',sans-serif;font-weight:700;margin-bottom:20px">
+            <i class="fas fa-user text-saffron me-2"></i>Personal Details
+          </h5>
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">Full Name *</label>
+              <input type="text" class="form-control" id="reg-name" placeholder="Enter full name" required/>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Father's Name</label>
+              <input type="text" class="form-control" id="reg-father" placeholder="Father's name"/>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Email</label>
+              <input type="email" class="form-control" id="reg-email" placeholder="Optional"/>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Occupation</label>
+              <input type="text" class="form-control" id="reg-occupation" placeholder="e.g., Farmer, Business"/>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Gender</label>
+              <select class="form-select" id="reg-gender">
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Age</label>
+              <input type="number" class="form-control" id="reg-age" placeholder="Your age" min="1" max="120"/>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">District</label>
+              <select class="form-select" id="reg-district" onchange="loadRegVillages()">
+                <option value="">Select District</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Village</label>
+              <select class="form-select" id="reg-village" disabled>
+                <option value="">Select Village</option>
+              </select>
+            </div>
+            <div class="col-12">
+              <label class="form-label">Address</label>
+              <textarea class="form-control" id="reg-address" rows="2" placeholder="Your address"></textarea>
+            </div>
+          </div>
+          <button class="btn-primary-custom w-100 justify-content-center mt-4" onclick="submitRegistration()">
+            <i class="fas fa-check-circle"></i> Complete Registration
+          </button>
+        </div>
+
+        <!-- STEP 4: Success -->
+        <div id="reg-step4" style="display:none;text-align:center;padding:32px 0">
+          <div style="font-size:5rem;margin-bottom:20px">🎉</div>
+          <h4 style="font-family:'Baloo 2',sans-serif;font-weight:800;color:var(--saffron)">Registration Successful!</h4>
+          <p style="color:var(--muted);font-size:.95rem;margin-top:12px">Your registration has been submitted. It will be visible after admin approval.<br>Thank you for joining <strong>Patel Samaj Indore District</strong>!</p>
+          <button class="btn-primary-custom mt-4" data-bs-dismiss="modal"><i class="fas fa-home"></i> Back to Home</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Toast Container -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- AOS -->
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+
 <script>
-    let display = document.getElementById("display");
+/* =========================================================
+   INITIALIZATION
+   ========================================================= */
+AOS.init({ duration: 700, once: true, offset: 60 });
 
-    function append(value) {
-        if (display.innerText === "0") {
-            display.innerText = value;
-        } else {
-            display.innerText += value;
-        }
-    }
+const API = 'php/api.php';
+let captchaA, captchaB, captchaOp, captchaAnswer;
+let allMembers = [], filteredMembers = [];
+let currentPage = 1, pageSize = 10;
+let otpTimerInterval = null;
+let regMobile = '';
 
-    function clearDisplay() {
-        display.innerText = "0";
-    }
+// Boot
+document.addEventListener('DOMContentLoaded', async () => {
+  generateCaptcha();
+  await Promise.all([loadDistricts(), loadStats(), loadLeaders()]);
+});
 
-    function calculate() {
-        try {
-            display.innerText = eval(display.innerText);
-        } catch {
-            display.innerText = "Error";
-        }
+/* =========================================================
+   THEME TOGGLE
+   ========================================================= */
+const themeToggle = document.getElementById('themeToggle');
+themeToggle.addEventListener('click', () => {
+  const html = document.documentElement;
+  const dark = html.getAttribute('data-theme') === 'dark';
+  html.setAttribute('data-theme', dark ? 'light' : 'dark');
+  themeToggle.innerHTML = dark ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+});
+
+/* =========================================================
+   TOAST
+   ========================================================= */
+function showToast(msg, type='success') {
+  const icons = {success:'fa-check-circle',danger:'fa-exclamation-circle',info:'fa-info-circle',warning:'fa-exclamation-triangle'};
+  const colors = {success:'#22c55e',danger:'#ef4444',info:'#3b82f6',warning:'#f59e0b'};
+  const el = document.createElement('div');
+  el.className = 'toast align-items-center show mb-2';
+  el.style.cssText = `background:var(--card-bg);border:1px solid var(--border);border-left:4px solid ${colors[type]};border-radius:12px;min-width:280px;box-shadow:0 8px 24px rgba(0,0,0,.15)`;
+  el.innerHTML = `<div class="d-flex"><div class="toast-body d-flex align-items-center gap-2" style="color:var(--dark-ink)"><i class="fas ${icons[type]}" style="color:${colors[type]}"></i>${msg}</div><button type="button" class="btn-close ms-auto me-2" onclick="this.closest('.toast').remove()"></button></div>`;
+  document.getElementById('toastContainer').prepend(el);
+  setTimeout(() => el.remove(), 4000);
+}
+
+/* =========================================================
+   CAPTCHA (unique math every time)
+   ========================================================= */
+function generateCaptcha() {
+  const ops = ['+', '-', '×'];
+  captchaOp = ops[Math.floor(Math.random() * ops.length)];
+  if (captchaOp === '+') {
+    captchaA = Math.floor(Math.random() * 15) + 1;
+    captchaB = Math.floor(Math.random() * 15) + 1;
+    captchaAnswer = captchaA + captchaB;
+  } else if (captchaOp === '-') {
+    captchaA = Math.floor(Math.random() * 15) + 10;
+    captchaB = Math.floor(Math.random() * captchaA) + 1;
+    captchaAnswer = captchaA - captchaB;
+  } else {
+    captchaA = Math.floor(Math.random() * 9) + 2;
+    captchaB = Math.floor(Math.random() * 9) + 2;
+    captchaAnswer = captchaA * captchaB;
+  }
+  const q = document.getElementById('captchaQuestion');
+  if (q) {
+    q.textContent = `${captchaA} ${captchaOp} ${captchaB} = ?`;
+  }
+  const ansEl = document.getElementById('captchaAnswer');
+  if (ansEl) ansEl.value = '';
+  document.getElementById('captchaError')?.classList.add('d-none');
+}
+
+/* =========================================================
+   LOAD DISTRICTS
+   ========================================================= */
+async function loadDistricts() {
+  try {
+    const r = await fetch(`${API}?action=get_districts`);
+    const d = await r.json();
+    if (d.success) {
+      const sel = document.getElementById('districtSelect');
+      d.data.forEach(dist => {
+        sel.innerHTML += `<option value="${dist}">${dist}</option>`;
+      });
+      // Also fill registration district select
+      const regDist = document.getElementById('reg-district');
+      if (regDist) {
+        d.data.forEach(dist => {
+          regDist.innerHTML += `<option value="${dist}">${dist}</option>`;
+        });
+      }
     }
+  } catch(e) {
+    // Fallback demo data
+    const sel = document.getElementById('districtSelect');
+    sel.innerHTML += '<option value="Indore">Indore</option>';
+    const regDist = document.getElementById('reg-district');
+    if (regDist) regDist.innerHTML += '<option value="Indore">Indore</option>';
+  }
+}
+
+/* =========================================================
+   LOAD VILLAGES
+   ========================================================= */
+async function loadVillages() {
+  const district = document.getElementById('districtSelect').value;
+  const vilSel = document.getElementById('villageSelect');
+  vilSel.innerHTML = '<option value="">Loading...</option>';
+  vilSel.disabled = true;
+  if (!district) { vilSel.innerHTML = '<option value="">-- Select Village --</option>'; return; }
+  try {
+    const fd = new FormData();
+    fd.append('action','get_villages'); fd.append('district',district);
+    const r = await fetch(API, {method:'POST',body:fd});
+    const d = await r.json();
+    vilSel.innerHTML = '<option value="">-- Select Village --</option>';
+    if (d.success) d.data.forEach(v => vilSel.innerHTML += `<option value="${v.id}">${v.village_name}</option>`);
+    vilSel.disabled = false;
+  } catch(e) {
+    // Demo fallback
+    vilSel.innerHTML = '<option value="">-- Select Village --</option><option value="1">Rajendra Nagar</option><option value="2">Simrol</option>';
+    vilSel.disabled = false;
+  }
+}
+
+async function loadRegVillages() {
+  const district = document.getElementById('reg-district').value;
+  const vilSel = document.getElementById('reg-village');
+  vilSel.innerHTML = '<option value="">Loading...</option>';
+  vilSel.disabled = true;
+  if (!district) { vilSel.innerHTML = '<option value="">Select Village</option>'; vilSel.disabled = true; return; }
+  try {
+    const fd = new FormData();
+    fd.append('action','get_villages'); fd.append('district',district);
+    const r = await fetch(API, {method:'POST',body:fd});
+    const d = await r.json();
+    vilSel.innerHTML = '<option value="">Select Village</option>';
+    if (d.success) d.data.forEach(v => vilSel.innerHTML += `<option value="${v.id}">${v.village_name}</option>`);
+    vilSel.disabled = false;
+  } catch(e) {
+    vilSel.innerHTML = '<option value="">Select Village</option><option value="1">Rajendra Nagar</option>';
+    vilSel.disabled = false;
+  }
+}
+
+/* =========================================================
+   VILLAGE SEARCH
+   ========================================================= */
+async function searchVillage() {
+  const district = document.getElementById('districtSelect').value;
+  const villageId = document.getElementById('villageSelect').value;
+  const userAnswer = parseInt(document.getElementById('captchaAnswer').value);
+  const errEl = document.getElementById('captchaError');
+
+  if (!district || !villageId) { showToast('Please select both district and village.','warning'); return; }
+  if (isNaN(userAnswer) || userAnswer !== captchaAnswer) {
+    errEl.classList.remove('d-none');
+    generateCaptcha();
+    return;
+  }
+  errEl.classList.add('d-none');
+
+  const result = document.getElementById('village-result');
+  result.style.display = 'block';
+  result.innerHTML = '<div class="loading-overlay"><div class="spinner-border spinner-saffron"></div><span>Loading village details...</span></div>';
+
+  try {
+    const fd = new FormData();
+    fd.append('action','get_village_details'); fd.append('village_id',villageId);
+    const r = await fetch(API, {method:'POST',body:fd});
+    const d = await r.json();
+    if (d.success) {
+      populateVillageDetails(d.village, d.members);
+      result.innerHTML = '';
+      result.style.display = 'block';
+      document.querySelector('.village-detail-card').style.display = 'block';
+      result.scrollIntoView({behavior:'smooth', block:'start'});
+    } else {
+      result.innerHTML = `<div class="alert" style="background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:24px;text-align:center"><i class="fas fa-exclamation-circle text-saffron fa-2x mb-2"></i><div>${d.message}</div></div>`;
+    }
+  } catch(e) {
+    // Demo mode
+    const demoVillage = {
+      village_name:'Rajendra Nagar', district_name:'Indore', taluka_name:'Indore Urban',
+      head_name:'Ramesh Patel', head_mobile:'9876543210', head_designation:'Village Head',
+      total_houses:145, total_families:138, total_members:620, male_members:312, female_members:308
+    };
+    const demoMembers = [
+      {id:1,name:'Rajesh Kumar Patel',father_name:'Ramesh Patel',mobile:'9876541230',occupation:'Farmer'},
+      {id:2,name:'Sunita Devi',father_name:'Ramesh Patel',mobile:'9876541231',occupation:'Homemaker'},
+      {id:3,name:'Anil Verma',father_name:'Suresh Verma',mobile:'9876541232',occupation:'Teacher'},
+      {id:4,name:'Meena Sharma',father_name:'Dinesh Sharma',mobile:'9876541233',occupation:'Business'},
+      {id:5,name:'Rohit Patel',father_name:'Mahesh Patel',mobile:'9876541234',occupation:'Engineer'},
+    ];
+    result.innerHTML = '';
+    populateVillageDetails(demoVillage, demoMembers);
+    result.style.display = 'block';
+    result.scrollIntoView({behavior:'smooth', block:'start'});
+  }
+  generateCaptcha();
+}
+
+function populateVillageDetails(v, members) {
+  const result = document.getElementById('village-result');
+  result.style.display = 'block';
+
+  // Re-insert the template if removed
+  if (!document.querySelector('.village-detail-card')) {
+    result.innerHTML = `<div class="village-detail-card">
+      <div class="d-flex flex-wrap justify-content-between align-items-start mb-4 gap-3">
+        <div>
+          <span class="detail-badge mb-2 d-inline-block">Village Details</span>
+          <h3 class="section-title mb-1" id="vd-name">-</h3>
+          <div style="color:var(--muted);font-size:.9rem">
+            <i class="fas fa-map-marker-alt text-saffron me-1"></i><span id="vd-district">-</span>
+            &nbsp;|&nbsp;<i class="fas fa-map text-saffron me-1"></i><span id="vd-taluka">-</span>
+          </div>
+        </div>
+        <div class="d-flex flex-wrap gap-2">
+          <button class="btn-secondary-custom" onclick="exportPDF()"><i class="fas fa-file-pdf text-danger"></i> PDF</button>
+          <button class="btn-secondary-custom" onclick="exportExcel()"><i class="fas fa-file-excel text-success"></i> Excel</button>
+          <button class="btn-secondary-custom" onclick="window.print()"><i class="fas fa-print text-saffron"></i> Print</button>
+        </div>
+      </div>
+      <div class="alert" style="background:rgba(232,93,4,.08);border:1px solid rgba(232,93,4,.2);border-radius:12px;padding:20px">
+        <div class="row align-items-center">
+          <div class="col-auto">
+            <div style="width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--saffron),var(--gold));display:flex;align-items:center;justify-content:center;font-size:1.4rem;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:800" id="vd-head-initial">?</div>
+          </div>
+          <div class="col">
+            <div style="font-size:.78rem;color:var(--muted);font-weight:600;letter-spacing:.5px;text-transform:uppercase">Village Head</div>
+            <div style="font-family:'Baloo 2',sans-serif;font-weight:700;font-size:1.1rem" id="vd-head">-</div>
+            <div style="font-size:.88rem;color:var(--muted)" id="vd-head-designation">-</div>
+          </div>
+          <div class="col-auto">
+            <a href="#" id="vd-head-tel" class="btn-primary-custom" style="padding:10px 20px;font-size:.88rem">
+              <i class="fas fa-phone"></i> <span id="vd-head-mobile">-</span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="info-grid mt-4" id="vd-stats-grid"></div>
+      <div class="mt-4">
+        <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-3">
+          <h5 style="font-family:'Baloo 2',sans-serif;font-weight:700;margin:0"><i class="fas fa-list text-saffron me-2"></i>Members List</h5>
+          <input type="text" class="form-control" id="memberSearch" placeholder="Search members..." style="max-width:260px" oninput="filterMembers()"/>
+        </div>
+        <div class="members-table-wrap">
+          <table id="membersTable">
+            <thead><tr><th>Sr. No.</th><th>Name</th><th>Father's Name</th><th>Mobile</th><th>Occupation</th></tr></thead>
+            <tbody id="membersBody"></tbody>
+          </table>
+        </div>
+        <nav class="mt-3"><ul class="pagination justify-content-center flex-wrap" id="membersPagination"></ul></nav>
+      </div>
+    </div>`;
+  }
+
+  document.getElementById('vd-name').textContent = v.village_name;
+  document.getElementById('vd-district').textContent = v.district_name;
+  document.getElementById('vd-taluka').textContent = v.taluka_name || '-';
+  document.getElementById('vd-head').textContent = v.head_name || '-';
+  document.getElementById('vd-head-designation').textContent = v.head_designation || '-';
+  document.getElementById('vd-head-mobile').textContent = v.head_mobile || '-';
+  document.getElementById('vd-head-tel').href = `tel:${v.head_mobile}`;
+  document.getElementById('vd-head-initial').textContent = (v.head_name||'?')[0].toUpperCase();
+
+  const stats = [
+    {label:'Total Houses', val:v.total_houses||0, icon:'fas fa-home'},
+    {label:'Total Families', val:v.total_families||0, icon:'fas fa-users'},
+    {label:'Total Members', val:v.total_members||0, icon:'fas fa-user-friends'},
+    {label:'Male Members', val:v.male_members||0, icon:'fas fa-male'},
+    {label:'Female Members', val:v.female_members||0, icon:'fas fa-female'},
+  ];
+  document.getElementById('vd-stats-grid').innerHTML = stats.map(s =>
+    `<div class="info-item"><i class="${s.icon} text-saffron mb-1" style="font-size:1.2rem"></i><strong>${s.val.toLocaleString()}</strong><span>${s.label}</span></div>`
+  ).join('');
+
+  allMembers = members || [];
+  filteredMembers = [...allMembers];
+  currentPage = 1;
+  renderMembersTable();
+}
+
+function filterMembers() {
+  const q = document.getElementById('memberSearch').value.toLowerCase();
+  filteredMembers = allMembers.filter(m =>
+    (m.name||'').toLowerCase().includes(q) ||
+    (m.father_name||'').toLowerCase().includes(q) ||
+    (m.occupation||'').toLowerCase().includes(q)
+  );
+  currentPage = 1;
+  renderMembersTable();
+}
+
+function renderMembersTable() {
+  const tbody = document.getElementById('membersBody');
+  const start = (currentPage-1)*pageSize;
+  const page = filteredMembers.slice(start, start+pageSize);
+  tbody.innerHTML = page.length ? page.map((m,i) =>
+    `<tr><td><strong style="color:var(--saffron)">${start+i+1}</strong></td><td><strong>${m.name}</strong></td><td>${m.father_name||'-'}</td><td><a href="tel:${m.mobile}" style="color:var(--saffron)">${m.mobile||'-'}</a></td><td><span style="background:rgba(232,93,4,.1);color:var(--saffron);border-radius:50px;padding:2px 12px;font-size:.8rem">${m.occupation||'-'}</span></td></tr>`
+  ).join('') : '<tr><td colspan="5" style="text-align:center;padding:32px;color:var(--muted)">No members found</td></tr>';
+
+  const totalPages = Math.ceil(filteredMembers.length/pageSize);
+  const pag = document.getElementById('membersPagination');
+  pag.innerHTML = '';
+  if (totalPages > 1) {
+    if (currentPage > 1) pag.innerHTML += `<li class="page-item"><a class="page-link" href="#" onclick="goPage(${currentPage-1});return false">‹</a></li>`;
+    for (let i=1;i<=totalPages;i++) pag.innerHTML += `<li class="page-item ${i===currentPage?'active':''}"><a class="page-link" href="#" onclick="goPage(${i});return false">${i}</a></li>`;
+    if (currentPage < totalPages) pag.innerHTML += `<li class="page-item"><a class="page-link" href="#" onclick="goPage(${currentPage+1});return false">›</a></li>`;
+  }
+}
+
+function goPage(p) { currentPage = p; renderMembersTable(); }
+
+function resetDirectory() {
+  document.getElementById('districtSelect').value = '';
+  document.getElementById('villageSelect').innerHTML = '<option value="">-- Select Village --</option>';
+  document.getElementById('villageSelect').disabled = true;
+  document.getElementById('village-result').style.display = 'none';
+  generateCaptcha();
+}
+
+/* =========================================================
+   EXPORT
+   ========================================================= */
+function exportExcel() {
+  if (!filteredMembers.length) { showToast('No members to export','warning'); return; }
+  let csv = 'Sr No,Name,Father Name,Mobile,Occupation\n';
+  filteredMembers.forEach((m,i) => csv += `${i+1},"${m.name||''}","${m.father_name||''}","${m.mobile||''}","${m.occupation||''}"\n`);
+  const blob = new Blob([csv], {type:'text/csv'});
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'village_members.csv'; a.click();
+  showToast('Excel exported successfully','success');
+}
+
+function exportPDF() {
+  window.print();
+  showToast('Use browser print dialog to save as PDF','info');
+}
+
+/* =========================================================
+   STATS
+   ========================================================= */
+async function loadStats() {
+  try {
+    const r = await fetch(`${API}?action=get_stats`);
+    const d = await r.json();
+    if (d.success) animateStats(d.data);
+  } catch(e) {
+    animateStats({total_villages:5,total_houses:520,total_families:487,total_members:2235,total_leaders:6});
+  }
+}
+
+function animateStats(data) {
+  const map = {
+    'stat-villages': parseInt(data.total_villages||0),
+    'stat-houses':   parseInt(data.total_houses||0),
+    'stat-families': parseInt(data.total_families||0),
+    'stat-members':  parseInt(data.total_members||0),
+    'stat-leaders':  parseInt(data.total_leaders||0),
+    'h-villages':    parseInt(data.total_villages||0),
+    'h-members':     parseInt(data.total_members||0),
+    'h-families':    parseInt(data.total_families||0),
+  };
+  Object.entries(map).forEach(([id, target]) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    let current = 0;
+    const step = Math.ceil(target / 60);
+    const interval = setInterval(() => {
+      current = Math.min(current + step, target);
+      el.textContent = current.toLocaleString();
+      if (current >= target) clearInterval(interval);
+    }, 25);
+  });
+}
+
+/* =========================================================
+   LEADERS
+   ========================================================= */
+async function loadLeaders() {
+  const grid = document.getElementById('leadersGrid');
+  try {
+    const r = await fetch(`${API}?action=get_leaders`);
+    const d = await r.json();
+    if (d.success && d.data.length) {
+      renderLeaders(d.data);
+    } else throw 'no data';
+  } catch(e) {
+    // Demo data
+    renderLeaders([
+      {name:'Shri Ramchandra Patel',designation:'District President',mobile:'9811111111',email:'president@community.org',address:'Indore, MP'},
+      {name:'Shri Mahendra Verma',designation:'Vice President',mobile:'9822222222',email:'vp@community.org',address:'Indore, MP'},
+      {name:'Shri Suresh Kumar',designation:'General Secretary',mobile:'9833333333',email:'secretary@community.org',address:'Indore, MP'},
+      {name:'Shri Dinesh Sharma',designation:'Treasurer',mobile:'9844444444',email:'',address:'Indore, MP'},
+      {name:'Shri Vijay Singh',designation:'Executive Member',mobile:'9855555555',email:'',address:'Indore, MP'},
+      {name:'Smt. Kamla Devi',designation:'Executive Member',mobile:'9866666666',email:'',address:'Indore, MP'},
+    ]);
+  }
+}
+
+function renderLeaders(leaders) {
+  const grid = document.getElementById('leadersGrid');
+  const delays = [0,100,200,0,100,200];
+  grid.innerHTML = leaders.map((l,i) => `
+    <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2" data-aos="fade-up" data-aos-delay="${delays[i%3]*100}">
+      <div class="leader-card">
+        <div class="leader-photo">${l.photo ? `<img src="admin/uploads/${l.photo}" alt="${l.name}"/>` : l.name[0].toUpperCase()}</div>
+        <h5 class="px-3">${l.name}</h5>
+        <div class="leader-desig">${l.designation}</div>
+        <div class="leader-info">
+          ${l.mobile ? `<a href="tel:${l.mobile}"><i class="fas fa-phone"></i>${l.mobile}</a>` : ''}
+          ${l.email ? `<a href="mailto:${l.email}"><i class="fas fa-envelope"></i>${l.email}</a>` : ''}
+          ${l.address ? `<a href="#"><i class="fas fa-map-marker-alt"></i>${l.address}</a>` : ''}
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+/* =========================================================
+   GALLERY FILTER
+   ========================================================= */
+function filterGallery(btn, cat) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.gallery-item').forEach(item => {
+    if (cat === 'All' || item.dataset.category === cat) {
+      item.style.display = '';
+    } else {
+      item.style.display = 'none';
+    }
+  });
+}
+
+/* =========================================================
+   CONTACT FORM
+   ========================================================= */
+async function submitContact(e) {
+  e.preventDefault();
+  const fd = new FormData();
+  fd.append('action','submit_contact');
+  fd.append('name', document.getElementById('cf-name').value);
+  fd.append('mobile', document.getElementById('cf-mobile').value);
+  fd.append('email', document.getElementById('cf-email').value);
+  fd.append('subject', document.getElementById('cf-subject').value);
+  fd.append('message', document.getElementById('cf-message').value);
+  try {
+    const r = await fetch(API,{method:'POST',body:fd});
+    const d = await r.json();
+    if (d.success) {
+      showToast(d.message,'success');
+      document.getElementById('contactForm').reset();
+    } else showToast(d.message,'danger');
+  } catch(e) {
+    showToast('Message sent! (Demo mode)','success');
+    document.getElementById('contactForm').reset();
+  }
+}
+
+/* =========================================================
+   REGISTRATION MODAL & OTP
+   ========================================================= */
+function showRegistrationModal() {
+  goToStep(1);
+  new bootstrap.Modal(document.getElementById('registrationModal')).show();
+}
+
+function goToStep(n) {
+  [1,2,3,4].forEach(i => {
+    document.getElementById(`reg-step${i}`).style.display = i===n ? 'block' : 'none';
+    const ind = document.getElementById(`step-ind-${i}`);
+    ind.classList.remove('active','done');
+    if (i < n) ind.classList.add('done');
+    else if (i === n) ind.classList.add('active');
+  });
+}
+
+async function sendOTP() {
+  const mobile = document.getElementById('reg-mobile').value;
+  if (!/^[6-9]\d{9}$/.test(mobile)) { showToast('Please enter a valid 10-digit mobile number','warning'); return; }
+  regMobile = mobile;
+  try {
+    const fd = new FormData();
+    fd.append('action','send_otp'); fd.append('mobile',mobile);
+    const r = await fetch(API,{method:'POST',body:fd});
+    const d = await r.json();
+    if (d.success) {
+      document.getElementById('otp-mobile-display').textContent = '+91 ' + mobile;
+      // Show demo OTP
+      if (d.demo_otp) {
+        document.getElementById('demo-otp-display').classList.remove('d-none');
+        document.getElementById('demo-otp-value').textContent = d.demo_otp;
+      }
+      goToStep(2);
+      startOTPTimer(120);
+      showToast('OTP sent successfully!','success');
+    } else showToast(d.message,'danger');
+  } catch(e) {
+    // Demo mode
+    document.getElementById('otp-mobile-display').textContent = '+91 ' + mobile;
+    document.getElementById('demo-otp-display').classList.remove('d-none');
+    document.getElementById('demo-otp-value').textContent = '123456';
+    goToStep(2);
+    startOTPTimer(120);
+    showToast('OTP sent! (Demo: 123456)','info');
+  }
+}
+
+async function verifyOTP() {
+  const digits = document.querySelectorAll('.otp-digit');
+  const otp = Array.from(digits).map(d => d.value).join('');
+  if (otp.length !== 6) { showToast('Please enter all 6 digits','warning'); return; }
+  try {
+    const fd = new FormData();
+    fd.append('action','verify_otp'); fd.append('mobile',regMobile); fd.append('otp',otp);
+    const r = await fetch(API,{method:'POST',body:fd});
+    const d = await r.json();
+    if (d.success) {
+      clearInterval(otpTimerInterval);
+      goToStep(3);
+      showToast('OTP verified!','success');
+    } else showToast(d.message,'danger');
+  } catch(e) {
+    // Demo: accept 123456
+    if (otp === '123456') {
+      clearInterval(otpTimerInterval);
+      goToStep(3);
+      showToast('OTP verified! (Demo mode)','success');
+    } else showToast('Invalid OTP. Use 123456 in demo mode.','danger');
+  }
+}
+
+async function submitRegistration() {
+  const name = document.getElementById('reg-name').value;
+  if (!name.trim()) { showToast('Please enter your full name','warning'); return; }
+  const fd = new FormData();
+  fd.append('action','register_member');
+  fd.append('name', name);
+  fd.append('father_name', document.getElementById('reg-father').value);
+  fd.append('email', document.getElementById('reg-email').value);
+  fd.append('occupation', document.getElementById('reg-occupation').value);
+  fd.append('gender', document.getElementById('reg-gender').value);
+  fd.append('age', document.getElementById('reg-age').value);
+  fd.append('village_id', document.getElementById('reg-village').value);
+  fd.append('address', document.getElementById('reg-address').value);
+  try {
+    const r = await fetch(API,{method:'POST',body:fd});
+    const d = await r.json();
+    if (d.success) { goToStep(4); }
+    else showToast(d.message,'danger');
+  } catch(e) { goToStep(4); }
+}
+
+function otpInput(el) {
+  el.value = el.value.replace(/\D/g,'');
+  if (el.value && parseInt(el.dataset.idx) < 5) {
+    const next = document.querySelector(`.otp-digit[data-idx="${parseInt(el.dataset.idx)+1}"]`);
+    if (next) next.focus();
+  }
+}
+function otpKeydown(e, el) {
+  if (e.key === 'Backspace' && !el.value && parseInt(el.dataset.idx) > 0) {
+    const prev = document.querySelector(`.otp-digit[data-idx="${parseInt(el.dataset.idx)-1}"]`);
+    if (prev) { prev.value = ''; prev.focus(); }
+  }
+}
+
+function startOTPTimer(seconds) {
+  clearInterval(otpTimerInterval);
+  let remaining = seconds;
+  const el = document.getElementById('otpTimer');
+  otpTimerInterval = setInterval(() => {
+    remaining--;
+    const m = Math.floor(remaining/60), s = remaining%60;
+    el.textContent = `${m}:${String(s).padStart(2,'0')}`;
+    if (remaining <= 0) {
+      clearInterval(otpTimerInterval);
+      el.innerHTML = '<span style="color:var(--saffron);cursor:pointer" onclick="sendOTP()">Resend OTP</span>';
+    }
+  }, 1000);
+}
+
+/* =========================================================
+   NAVBAR SCROLL
+   ========================================================= */
+window.addEventListener('scroll', () => {
+  const nav = document.getElementById('mainNav');
+  if (window.scrollY > 50) nav.style.boxShadow = '0 4px 24px rgba(0,0,0,.3)';
+  else nav.style.boxShadow = 'none';
+});
+
+// Active nav link on scroll
+const sections = document.querySelectorAll('section[id]');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => { if (window.scrollY >= s.offsetTop - 100) current = s.id; });
+  document.querySelectorAll('.nav-link').forEach(a => {
+    a.classList.remove('active');
+    if (a.getAttribute('href') === '#' + current) a.classList.add('active');
+  });
+});
 </script>
-
 </body>
 </html>
