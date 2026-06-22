@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Admin Panel | Patel Samaj Community Portal</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Hind:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --saffron:#E85D04;--gold:#F4A261;--deep:#C44B00;
+  --bg:#0F1117;--sidebar:#161B27;--card:#1A1F2E;
+  --border:#252C3F;--text:#E8E8F0;--muted:#8892A4;
+  --radius:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Hind',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+h1,h2,h3,h4,h5,h6{font-family:'Baloo 2',sans-serif}
+
+/* LOGIN */
+.login-wrap{
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(ellipse at top left,rgba(232,93,4,.15) 0%,transparent 60%),
+             radial-gradient(ellipse at bottom right,rgba(244,162,97,.08) 0%,transparent 60%),
+             var(--bg);
+}
+.login-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:20px;padding:48px;width:100%;max-width:420px;
+  box-shadow:0 20px 60px rgba(0,0,0,.4);
+}
+.login-logo{
+  width:72px;height:72px;background:linear-gradient(135deg,var(--saffron),var(--gold));
+  border-radius:20px;display:flex;align-items:center;justify-content:center;
+  font-size:2rem;color:#fff;margin:0 auto 24px;
+}
+.form-control{
+  background:#0F1117;border:1.5px solid var(--border);color:var(--text);
+  border-radius:10px;padding:12px 16px;transition:border-color .2s;
+}
+.form-control:focus{border-color:var(--saffron);box-shadow:0 0 0 3px rgba(232,93,4,.12);background:#0F1117;color:var(--text)}
+.form-control::placeholder{color:var(--muted)}
+.form-label{color:var(--muted);font-size:.88rem;font-weight:600;margin-bottom:6px}
+.btn-login{
+  background:linear-gradient(135deg,var(--saffron),var(--deep));color:#fff;
+  border:none;border-radius:12px;padding:14px;font-family:'Baloo 2',sans-serif;
+  font-weight:700;font-size:1rem;width:100%;transition:all .25s;cursor:pointer;
+}
+.btn-login:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(232,93,4,.4)}
+
+/* ADMIN LAYOUT */
+.admin-layout{display:flex;min-height:100vh}
+.sidebar{
+  width:260px;background:var(--sidebar);border-right:1px solid var(--border);
+  display:flex;flex-direction:column;position:fixed;top:0;bottom:0;left:0;z-index:100;
+  transition:transform .3s;overflow-y:auto;
+}
+.sidebar-brand{
+  padding:24px 20px;border-bottom:1px solid var(--border);
+  font-family:'Baloo 2',sans-serif;font-weight:800;font-size:1.1rem;color:#fff;
+  display:flex;align-items:center;gap:12px;flex-shrink:0;
+}
+.brand-dot{
+  width:36px;height:36px;background:linear-gradient(135deg,var(--saffron),var(--gold));
+  border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:.9rem;
+}
+.nav-section{padding:8px 12px;margin-top:8px}
+.nav-section-title{
+  font-size:.68rem;color:var(--muted);font-weight:700;letter-spacing:1.5px;
+  text-transform:uppercase;padding:0 8px;margin-bottom:4px;
+}
+.nav-item{
+  display:flex;align-items:center;gap:10px;padding:10px 14px;
+  border-radius:10px;color:var(--muted);cursor:pointer;
+  transition:all .2s;font-size:.9rem;font-weight:500;margin-bottom:2px;
+  border:1px solid transparent;
+}
+.nav-item:hover{background:rgba(232,93,4,.1);color:var(--text)}
+.nav-item.active{background:rgba(232,93,4,.15);color:#fff;border-color:rgba(232,93,4,.25)}
+.nav-item i{width:18px;font-size:.95rem;color:var(--saffron)}
+.nav-item .badge{
+  margin-left:auto;background:var(--saffron);color:#fff;
+  border-radius:50px;padding:1px 8px;font-size:.7rem;
+}
+
+.main-content{margin-left:260px;flex:1;display:flex;flex-direction:column}
+.topbar{
+  background:var(--sidebar);border-bottom:1px solid var(--border);
+  padding:16px 24px;display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:50;
+}
+.topbar-title{font-family:'Baloo 2',sans-serif;font-weight:700;font-size:1.1rem}
+.page-content{padding:28px;flex:1}
+
+/* CARDS */
+.stat-card{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:24px;position:relative;overflow:hidden;
+}
+.stat-card::after{
+  content:'';position:absolute;right:-16px;top:-16px;
+  width:80px;height:80px;border-radius:50%;
+  background:rgba(232,93,4,.08);
+}
+.stat-card .icon{
+  width:48px;height:48px;border-radius:12px;
+  background:linear-gradient(135deg,var(--saffron),var(--gold));
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.2rem;color:#fff;margin-bottom:16px;
+}
+.stat-card h3{font-size:2rem;font-weight:800;color:#fff;margin-bottom:4px}
+.stat-card p{color:var(--muted);font-size:.85rem;margin:0}
+
+/* TABLE */
+.data-table{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.data-table-head{
+  padding:20px 24px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;
+}
+.data-table-head h5{font-family:'Baloo 2',sans-serif;font-weight:700;color:#fff;margin:0}
+table{width:100%;border-collapse:collapse}
+thead th{
+  background:rgba(232,93,4,.1);color:var(--muted);
+  padding:12px 16px;font-size:.8rem;font-weight:700;
+  text-transform:uppercase;letter-spacing:.5px;text-align:left;
+}
+tbody td{padding:14px 16px;border-bottom:1px solid var(--border);font-size:.9rem;color:var(--text)}
+tbody tr:hover{background:rgba(255,255,255,.02)}
+tbody tr:last-child td{border-bottom:none}
+
+/* FORM */
+.form-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:28px}
+.btn-primary{
+  background:linear-gradient(135deg,var(--saffron),var(--deep));color:#fff;
+  border:none;border-radius:10px;padding:10px 24px;
+  font-family:'Baloo 2',sans-serif;font-weight:700;cursor:pointer;
+  transition:all .2s;display:inline-flex;align-items:center;gap:8px;
+}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(232,93,4,.35);color:#fff}
+.btn-secondary-adm{
+  background:transparent;color:var(--muted);border:1.5px solid var(--border);
+  border-radius:10px;padding:9px 20px;font-weight:600;cursor:pointer;
+  transition:all .2s;display:inline-flex;align-items:center;gap:8px;
+}
+.btn-secondary-adm:hover{border-color:var(--saffron);color:var(--text)}
+.btn-danger-sm{
+  background:rgba(239,68,68,.1);color:#ef4444;border:1px solid rgba(239,68,68,.2);
+  border-radius:8px;padding:5px 12px;font-size:.8rem;cursor:pointer;transition:all .2s;
+}
+.btn-danger-sm:hover{background:#ef4444;color:#fff}
+.btn-edit-sm{
+  background:rgba(232,93,4,.1);color:var(--saffron);border:1px solid rgba(232,93,4,.2);
+  border-radius:8px;padding:5px 12px;font-size:.8rem;cursor:pointer;transition:all .2s;
+}
+.btn-edit-sm:hover{background:var(--saffron);color:#fff}
+.badge-approved{background:rgba(34,197,94,.15);color:#22c55e;border-radius:50px;padding:3px 12px;font-size:.78rem;font-weight:600}
+.badge-pending{background:rgba(245,158,11,.15);color:#f59e0b;border-radius:50px;padding:3px 12px;font-size:.78rem;font-weight:600}
+
+/* MODAL */
+.modal-content{background:var(--card);border:1px solid var(--border)}
+.modal-header{border-bottom:1px solid var(--border)}
+.modal-footer{border-top:1px solid var(--border)}
+.btn-close{filter:invert(1)}
+
+/* SEARCH */
+.admin-search{
+  background:#0F1117;border:1.5px solid var(--border);color:var(--text);
+  border-radius:8px;padding:8px 14px;font-size:.88rem;width:220px;
+}
+.admin-search:focus{outline:none;border-color:var(--saffron)}
+.admin-search::placeholder{color:var(--muted)}
+
+/* Responsive */
+@media(max-width:992px){
+  .sidebar{transform:translateX(-100%)}
+  .sidebar.open{transform:none}
+  .main-content{margin-left:0}
+}
+.logout-btn{
+  margin-top:auto;padding:16px 12px;border-top:1px solid var(--border);
+}
+.logout-btn .nav-item{color:#ef4444}
+.logout-btn .nav-item i{color:#ef4444}
+.logout-btn .nav-item:hover{background:rgba(239,68,68,.1)}
+
+.section-panel{display:none}
+.section-panel.active{display:block}
+.toast-adm{position:fixed;top:20px;right:20px;z-index:9999}
+select.form-control option{background:var(--card);color:var(--text)}
+</style>
+</head>
+<body>
+
+<!-- ═══ LOGIN PAGE ══════════════════════════════════════════ -->
+<div id="loginPage" class="login-wrap">
+  <div class="login-card">
+    <div class="login-logo"><i class="fas fa-shield-alt"></i></div>
+    <div style="text-align:center;margin-bottom:32px">
+      <h3 style="font-weight:800;color:#fff;margin-bottom:4px">Admin Login</h3>
+      <p style="color:var(--muted);font-size:.88rem">Patel Samaj Community Portal</p>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Username</label>
+      <div style="position:relative">
+        <i class="fas fa-user" style="position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted)"></i>
+        <input type="text" class="form-control" id="loginUser" placeholder="admin" style="padding-left:40px"/>
+      </div>
+    </div>
+    <div class="mb-4">
+      <label class="form-label">Password</label>
+      <div style="position:relative">
+        <i class="fas fa-lock" style="position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted)"></i>
+        <input type="password" class="form-control" id="loginPass" placeholder="••••••••" style="padding-left:40px" onkeydown="if(event.key==='Enter')doLogin()"/>
+        <button type="button" onclick="togglePw(this)" style="position:absolute;right:14px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--muted);cursor:pointer"><i class="fas fa-eye"></i></button>
+      </div>
+    </div>
+    <button class="btn-login" onclick="doLogin()"><i class="fas fa-sign-in-alt me-2"></i>Login to Dashboard</button>
+    <div style="text-align:center;margin-top:20px;font-size:.82rem;color:var(--muted)">
+      Demo: admin / admin123 &nbsp;|&nbsp; <a href="../index.html" style="color:var(--saffron)">← Back to Portal</a>
+    </div>
+    <div id="loginError" class="mt-3 text-center" style="color:#ef4444;font-size:.88rem;display:none"><i class="fas fa-exclamation-circle me-1"></i>Invalid username or password</div>
+  </div>
+</div>
+
+<!-- ═══ ADMIN DASHBOARD ══════════════════════════════════════ -->
+<div id="adminApp" style="display:none">
+<div class="admin-layout">
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-dot"><i class="fas fa-om"></i></div>
+      <div><div>Admin Panel</div><div style="font-size:.68rem;color:var(--muted);font-weight:400">Patel Samaj</div></div>
+    </div>
+    <div class="nav-section">
+      <div class="nav-section-title">Overview</div>
+      <div class="nav-item active" onclick="showSection('dashboard',this)"><i class="fas fa-tachometer-alt"></i>Dashboard</div>
+    </div>
+    <div class="nav-section">
+      <div class="nav-section-title">Management</div>
+      <div class="nav-item" onclick="showSection('villages',this)"><i class="fas fa-map-marker-alt"></i>Village Management</div>
+      <div class="nav-item" onclick="showSection('members',this)"><i class="fas fa-users"></i>Members</div>
+      <div class="nav-item" onclick="showSection('registrations',this)"><i class="fas fa-user-plus"></i>Registrations <span class="badge" id="reg-badge">0</span></div>
+      <div class="nav-item" onclick="showSection('leaders',this)"><i class="fas fa-award"></i>Leaders</div>
+      <div class="nav-item" onclick="showSection('gallery',this)"><i class="fas fa-images"></i>Gallery</div>
+    </div>
+    <div class="nav-section">
+      <div class="nav-section-title">Communication</div>
+      <div class="nav-item" onclick="showSection('feedback',this)"><i class="fas fa-comments"></i>Feedback <span class="badge" id="feedback-badge">0</span></div>
+    </div>
+    <div class="logout-btn">
+      <div class="nav-item" onclick="doLogout()"><i class="fas fa-sign-out-alt"></i>Logout</div>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="topbar">
+      <div class="d-flex align-items-center gap-3">
+        <button onclick="document.getElementById('sidebar').classList.toggle('open')" style="background:none;border:none;color:var(--text);font-size:1.2rem;cursor:pointer;display:none" class="d-lg-none" id="menuToggle">
+          <i class="fas fa-bars"></i>
+        </button>
+        <div class="topbar-title" id="topbarTitle">Dashboard</div>
+      </div>
+      <div class="d-flex align-items-center gap-3">
+        <a href="../index.html" style="color:var(--muted);font-size:.85rem;text-decoration:none;background:rgba(255,255,255,.05);padding:7px 14px;border-radius:8px;border:1px solid var(--border)">
+          <i class="fas fa-external-link-alt me-1"></i>View Portal
+        </a>
+        <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--saffron),var(--gold));display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.9rem">A</div>
+      </div>
+    </div>
+    <div class="page-content">
+
+      <!-- ── DASHBOARD ───────────────────────────────────────── -->
+      <div id="sec-dashboard" class="section-panel active">
+        <div class="row g-4 mb-4">
+          <div class="col-sm-6 col-xl-3">
+            <div class="stat-card"><div class="icon"><i class="fas fa-map-marker-alt"></i></div><h3 id="d-villages">-</h3><p>Total Villages</p></div>
+          </div>
+          <div class="col-sm-6 col-xl-3">
+            <div class="stat-card"><div class="icon"><i class="fas fa-users"></i></div><h3 id="d-members">-</h3><p>Total Members</p></div>
+          </div>
+          <div class="col-sm-6 col-xl-3">
+            <div class="stat-card"><div class="icon"><i class="fas fa-home"></i></div><h3 id="d-houses">-</h3><p>Total Houses</p></div>
+          </div>
+          <div class="col-sm-6 col-xl-3">
+            <div class="stat-card"><div class="icon"><i class="fas fa-comments"></i></div><h3 id="d-feedback">0</h3><p>Feedback Received</p></div>
+          </div>
+        </div>
+        <div class="row g-4">
+          <div class="col-lg-8">
+            <div class="data-table">
+              <div class="data-table-head">
+                <h5><i class="fas fa-map text-warning me-2"></i>Villages Overview</h5>
+              </div>
+              <div style="overflow-x:auto">
+                <table>
+                  <thead><tr><th>Village</th><th>District</th><th>Houses</th><th>Families</th><th>Members</th><th>Head</th></tr></thead>
+                  <tbody id="dash-villages-body"><tr><td colspan="6" style="text-align:center;padding:24px;color:var(--muted)">Loading...</td></tr></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="data-table">
+              <div class="data-table-head"><h5><i class="fas fa-comments text-warning me-2"></i>Recent Messages</h5></div>
+              <div id="dash-feedback-list" style="padding:16px;max-height:320px;overflow-y:auto">
+                <div style="text-align:center;color:var(--muted);padding:20px">Loading...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── VILLAGES ───────────────────────────────────────── -->
+      <div id="sec-villages" class="section-panel">
+        <div class="row g-4">
+          <div class="col-xl-4">
+            <div class="form-card">
+              <h5 style="color:#fff;margin-bottom:20px" id="village-form-title"><i class="fas fa-plus text-warning me-2"></i>Add Village</h5>
+              <input type="hidden" id="vf-id"/>
+              <div class="mb-3"><label class="form-label">District *</label><input type="text" class="form-control" id="vf-district" placeholder="District name"/></div>
+              <div class="mb-3"><label class="form-label">Taluka/Block</label><input type="text" class="form-control" id="vf-taluka" placeholder="Taluka"/></div>
+              <div class="mb-3"><label class="form-label">Village Name *</label><input type="text" class="form-control" id="vf-village" placeholder="Village name"/></div>
+              <div class="mb-3"><label class="form-label">Village Head</label><input type="text" class="form-control" id="vf-head" placeholder="Head name"/></div>
+              <div class="mb-3"><label class="form-label">Head Mobile</label><input type="tel" class="form-control" id="vf-mobile" placeholder="Mobile number"/></div>
+              <div class="row g-2 mb-3">
+                <div class="col-4"><label class="form-label">Houses</label><input type="number" class="form-control" id="vf-houses" placeholder="0" min="0"/></div>
+                <div class="col-4"><label class="form-label">Families</label><input type="number" class="form-control" id="vf-families" placeholder="0" min="0"/></div>
+                <div class="col-4"><label class="form-label">Members</label><input type="number" class="form-control" id="vf-members" placeholder="0" min="0"/></div>
+              </div>
+              <div class="row g-2 mb-4">
+                <div class="col-6"><label class="form-label">Male</label><input type="number" class="form-control" id="vf-male" placeholder="0" min="0"/></div>
+                <div class="col-6"><label class="form-label">Female</label><input type="number" class="form-control" id="vf-female" placeholder="0" min="0"/></div>
+              </div>
+              <div class="d-flex gap-2">
+                <button class="btn-primary" onclick="saveVillage()"><i class="fas fa-save"></i>Save</button>
+                <button class="btn-secondary-adm" onclick="clearVillageForm()"><i class="fas fa-times"></i>Clear</button>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-8">
+            <div class="data-table">
+              <div class="data-table-head">
+                <h5><i class="fas fa-map-marker-alt text-warning me-2"></i>All Villages</h5>
+                <input type="text" class="admin-search" placeholder="Search villages..." oninput="filterAdminTable('villages-tbody',this.value,[0,1])"/>
+              </div>
+              <div style="overflow-x:auto">
+                <table><thead><tr><th>Village</th><th>District</th><th>Head</th><th>Members</th><th>Actions</th></tr></thead>
+                <tbody id="villages-tbody"><tr><td colspan="5" style="text-align:center;padding:24px;color:var(--muted)">Loading...</td></tr></tbody></table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── MEMBERS ────────────────────────────────────────── -->
+      <div id="sec-members" class="section-panel">
+        <div class="data-table">
+          <div class="data-table-head">
+            <h5><i class="fas fa-users text-warning me-2"></i>All Members</h5>
+            <input type="text" class="admin-search" placeholder="Search members..." oninput="filterAdminTable('members-tbody',this.value,[0,1,3])"/>
+          </div>
+          <div style="overflow-x:auto">
+            <table><thead><tr><th>#</th><th>Name</th><th>Village</th><th>Mobile</th><th>Occupation</th><th>Gender</th><th>Actions</th></tr></thead>
+            <tbody id="members-tbody"><tr><td colspan="7" style="text-align:center;padding:24px;color:var(--muted)">Loading...</td></tr></tbody></table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── REGISTRATIONS ──────────────────────────────────── -->
+      <div id="sec-registrations" class="section-panel">
+        <div class="data-table">
+          <div class="data-table-head">
+            <h5><i class="fas fa-user-plus text-warning me-2"></i>Pending Registrations</h5>
+          </div>
+          <div style="overflow-x:auto">
+            <table><thead><tr><th>Name</th><th>Mobile</th><th>Village</th><th>Occupation</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody id="registrations-tbody">
+              <tr><td colspan="6" style="text-align:center;padding:40px;color:var(--muted)">
+                <i class="fas fa-user-plus fa-2x mb-2 d-block" style="color:var(--border)"></i>No pending registrations
+              </td></tr>
+            </tbody></table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── LEADERS ────────────────────────────────────────── -->
+      <div id="sec-leaders" class="section-panel">
+        <div class="row g-4">
+          <div class="col-xl-4">
+            <div class="form-card">
+              <h5 style="color:#fff;margin-bottom:20px"><i class="fas fa-award text-warning me-2"></i>Add Leader</h5>
+              <input type="hidden" id="lf-id"/>
+              <div class="mb-3"><label class="form-label">Full Name *</label><input type="text" class="form-control" id="lf-name" placeholder="Leader's name"/></div>
+              <div class="mb-3"><label class="form-label">Designation *</label><input type="text" class="form-control" id="lf-desig" placeholder="e.g., District President"/></div>
+              <div class="mb-3"><label class="form-label">Mobile</label><input type="tel" class="form-control" id="lf-mobile" placeholder="Mobile number"/></div>
+              <div class="mb-3"><label class="form-label">Email</label><input type="email" class="form-control" id="lf-email" placeholder="Email (optional)"/></div>
+              <div class="mb-3"><label class="form-label">Address</label><input type="text" class="form-control" id="lf-address" placeholder="City, District"/></div>
+              <div class="mb-4"><label class="form-label">Sort Order</label><input type="number" class="form-control" id="lf-order" placeholder="1" min="1" value="1"/></div>
+              <div class="d-flex gap-2">
+                <button class="btn-primary" onclick="saveLeader()"><i class="fas fa-save"></i>Save</button>
+                <button class="btn-secondary-adm" onclick="clearLeaderForm()"><i class="fas fa-times"></i>Clear</button>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-8">
+            <div class="data-table">
+              <div class="data-table-head"><h5><i class="fas fa-award text-warning me-2"></i>All Leaders</h5></div>
+              <div style="overflow-x:auto">
+                <table><thead><tr><th>Name</th><th>Designation</th><th>Mobile</th><th>Actions</th></tr></thead>
+                <tbody id="leaders-tbody"><tr><td colspan="4" style="text-align:center;padding:24px;color:var(--muted)">Loading...</td></tr></tbody></table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── GALLERY ────────────────────────────────────────── -->
+      <div id="sec-gallery" class="section-panel">
+        <div class="row g-4">
+          <div class="col-xl-4">
+            <div class="form-card">
+              <h5 style="color:#fff;margin-bottom:20px"><i class="fas fa-images text-warning me-2"></i>Upload Image</h5>
+              <div class="mb-3"><label class="form-label">Image Title</label><input type="text" class="form-control" id="gf-title" placeholder="Image title"/></div>
+              <div class="mb-3">
+                <label class="form-label">Category</label>
+                <select class="form-control" id="gf-cat">
+                  <option value="Events">Events</option>
+                  <option value="Meetings">Meetings</option>
+                  <option value="Cultural">Cultural</option>
+                  <option value="Social">Social</option>
+                  <option value="General">General</option>
+                </select>
+              </div>
+              <div class="mb-4">
+                <label class="form-label">Select Image</label>
+                <input type="file" class="form-control" id="gf-file" accept="image/*"/>
+              </div>
+              <button class="btn-primary w-100 justify-content-center" onclick="uploadGallery()"><i class="fas fa-upload"></i>Upload</button>
+              <div style="font-size:.78rem;color:var(--muted);margin-top:12px">Note: Image upload requires PHP backend running on a web server.</div>
+            </div>
+          </div>
+          <div class="col-xl-8">
+            <div class="data-table">
+              <div class="data-table-head"><h5><i class="fas fa-images text-warning me-2"></i>Gallery Images</h5></div>
+              <div style="padding:24px">
+                <div id="gallery-grid-admin" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:12px">
+                  <div style="text-align:center;color:var(--muted);grid-column:1/-1;padding:40px">No images uploaded yet</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── FEEDBACK ───────────────────────────────────────── -->
+      <div id="sec-feedback" class="section-panel">
+        <div class="data-table">
+          <div class="data-table-head">
+            <h5><i class="fas fa-comments text-warning me-2"></i>All Feedback / Messages</h5>
+            <input type="text" class="admin-search" placeholder="Search messages..." oninput="filterAdminTable('feedback-tbody',this.value,[0,1,3])"/>
+          </div>
+          <div style="overflow-x:auto">
+            <table><thead><tr><th>Name</th><th>Mobile</th><th>Subject</th><th>Message</th><th>Date</th></tr></thead>
+            <tbody id="feedback-tbody"><tr><td colspan="5" style="text-align:center;padding:24px;color:var(--muted)">Loading...</td></tr></tbody></table>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- page-content -->
+  </main>
+</div>
+</div><!-- adminApp -->
+
+<!-- Toast -->
+<div id="toastAdm" class="toast-adm"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+// ── DEMO DATA STORE ────────────────────────────────────────
+const STORE = {
+  villages: [
+    {id:1,district_name:'Indore',taluka_name:'Indore Urban',village_name:'Rajendra Nagar',head_name:'Ramesh Patel',head_mobile:'9876543210',total_houses:145,total_families:138,total_members:620,male_members:312,female_members:308},
+    {id:2,district_name:'Indore',taluka_name:'Mhow',village_name:'Simrol',head_name:'Mahesh Verma',head_mobile:'9812345678',total_houses:89,total_families:82,total_members:380,male_members:192,female_members:188},
+    {id:3,district_name:'Indore',taluka_name:'Depalpur',village_name:'Kshipra',head_name:'Suresh Sharma',head_mobile:'9898765432',total_houses:112,total_families:105,total_members:490,male_members:248,female_members:242},
+    {id:4,district_name:'Indore',taluka_name:'Sanwer',village_name:'Hatod',head_name:'Dinesh Yadav',head_mobile:'9765432109',total_houses:76,total_families:70,total_members:320,male_members:162,female_members:158},
+    {id:5,district_name:'Indore',taluka_name:'Mhow',village_name:'Manpur',head_name:'Vikram Singh',head_mobile:'9654321098',total_houses:98,total_families:92,total_members:425,male_members:215,female_members:210},
+  ],
+  members: [
+    {id:1,village_id:1,village_name:'Rajendra Nagar',name:'Rajesh Kumar Patel',father_name:'Ramesh Patel',mobile:'9876541230',occupation:'Farmer',gender:'Male',age:35},
+    {id:2,village_id:1,village_name:'Rajendra Nagar',name:'Sunita Devi',father_name:'Ramesh Patel',mobile:'9876541231',occupation:'Homemaker',gender:'Female',age:30},
+    {id:3,village_id:1,village_name:'Rajendra Nagar',name:'Anil Verma',father_name:'Suresh Verma',mobile:'9876541232',occupation:'Teacher',gender:'Male',age:42},
+    {id:4,village_id:2,village_name:'Simrol',name:'Priya Verma',father_name:'Mahesh Verma',mobile:'9812345679',occupation:'Teacher',gender:'Female',age:32},
+  ],
+  leaders: [
+    {id:1,name:'Shri Ramchandra Patel',designation:'District President',mobile:'9811111111',email:'president@community.org',address:'Indore, MP',sort_order:1},
+    {id:2,name:'Shri Mahendra Verma',designation:'Vice President',mobile:'9822222222',email:'vp@community.org',address:'Indore, MP',sort_order:2},
+    {id:3,name:'Shri Suresh Kumar',designation:'General Secretary',mobile:'9833333333',email:'secretary@community.org',address:'Indore, MP',sort_order:3},
+    {id:4,name:'Shri Dinesh Sharma',designation:'Treasurer',mobile:'9844444444',email:'',address:'Indore, MP',sort_order:4},
+  ],
+  feedback: [
+    {id:1,name:'Ram Kumar',mobile:'9876543210',email:'ram@email.com',subject:'Suggestion',message:'Please add more village details to the portal.',created_at:'2024-01-15'},
+    {id:2,name:'Sita Devi',mobile:'9876543211',email:'',subject:'Query',message:'When will the next annual meeting be held?',created_at:'2024-01-16'},
+  ]
+};
+
+// ── LOGIN ──────────────────────────────────────────────────
+function doLogin() {
+  const u = document.getElementById('loginUser').value;
+  const p = document.getElementById('loginPass').value;
+  if ((u==='admin'&&p==='admin123')||(u==='admin'&&p==='Admin@1234')) {
+    document.getElementById('loginPage').style.display='none';
+    document.getElementById('adminApp').style.display='block';
+    loadDashboard();
+  } else {
+    document.getElementById('loginError').style.display='block';
+  }
+}
+function doLogout() {
+  document.getElementById('adminApp').style.display='none';
+  document.getElementById('loginPage').style.display='flex';
+  document.getElementById('loginUser').value='';
+  document.getElementById('loginPass').value='';
+}
+function togglePw(btn) {
+  const inp = btn.previousElementSibling;
+  if (inp.type==='password'){inp.type='text';btn.innerHTML='<i class="fas fa-eye-slash"></i>'}
+  else{inp.type='password';btn.innerHTML='<i class="fas fa-eye"></i>'}
+}
+
+// ── NAVIGATION ─────────────────────────────────────────────
+function showSection(name, el) {
+  document.querySelectorAll('.section-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.getElementById('sec-'+name).classList.add('active');
+  el.classList.add('active');
+  document.getElementById('topbarTitle').textContent = el.textContent.trim().replace(/\d+/,'').trim();
+  if (name==='villages') loadVillagesAdmin();
+  if (name==='members') loadMembersAdmin();
+  if (name==='leaders') loadLeadersAdmin();
+  if (name==='feedback') loadFeedbackAdmin();
+}
+
+// ── TOAST ──────────────────────────────────────────────────
+function toast(msg, type='success') {
+  const colors={success:'#22c55e',danger:'#ef4444',info:'#3b82f6',warning:'#f59e0b'};
+  const icons={success:'fa-check-circle',danger:'fa-times-circle',info:'fa-info-circle',warning:'fa-exclamation-triangle'};
+  const el = document.createElement('div');
+  el.style.cssText=`background:var(--card);border:1px solid var(--border);border-left:4px solid ${colors[type]};border-radius:12px;padding:14px 20px;margin-bottom:8px;display:flex;align-items:center;gap:10px;color:var(--text);min-width:260px;box-shadow:0 8px 24px rgba(0,0,0,.3)`;
+  el.innerHTML=`<i class="fas ${icons[type]}" style="color:${colors[type]}"></i>${msg}`;
+  document.getElementById('toastAdm').prepend(el);
+  setTimeout(()=>el.remove(),3500);
+}
+
+// ── DASHBOARD ──────────────────────────────────────────────
+function loadDashboard() {
+  const total_members = STORE.villages.reduce((a,v)=>a+v.total_members,0);
+  const total_houses = STORE.villages.reduce((a,v)=>a+v.total_houses,0);
+  document.getElementById('d-villages').textContent = STORE.villages.length;
+  document.getElementById('d-members').textContent = total_members.toLocaleString();
+  document.getElementById('d-houses').textContent = total_houses.toLocaleString();
+  document.getElementById('d-feedback').textContent = STORE.feedback.length;
+  document.getElementById('feedback-badge').textContent = STORE.feedback.length;
+
+  const vBody = document.getElementById('dash-villages-body');
+  vBody.innerHTML = STORE.villages.map(v=>`
+    <tr>
+      <td><strong>${v.village_name}</strong></td>
+      <td>${v.district_name}</td>
+      <td>${v.total_houses}</td>
+      <td>${v.total_families}</td>
+      <td><span style="color:var(--saffron);font-weight:700">${v.total_members}</span></td>
+      <td>${v.head_name||'-'}</td>
+    </tr>
+  `).join('');
+
+  const fbList = document.getElementById('dash-feedback-list');
+  fbList.innerHTML = STORE.feedback.map(f=>`
+    <div style="border-bottom:1px solid var(--border);padding:12px 0">
+      <div style="font-weight:600;font-size:.88rem;color:var(--text)">${f.name}</div>
+      <div style="color:var(--muted);font-size:.8rem;margin-top:2px">${f.message.substring(0,60)}...</div>
+      <div style="color:var(--muted);font-size:.75rem;margin-top:4px"><i class="fas fa-calendar me-1"></i>${f.created_at}</div>
+    </div>
+  `).join('') || '<div style="text-align:center;color:var(--muted)">No feedback yet</div>';
+}
+
+// ── VILLAGES ADMIN ──────────────────────────────────────────
+function loadVillagesAdmin() {
+  const tbody = document.getElementById('villages-tbody');
+  tbody.innerHTML = STORE.villages.map(v=>`
+    <tr>
+      <td><strong>${v.village_name}</strong></td>
+      <td>${v.district_name}</td>
+      <td>${v.head_name||'-'}</td>
+      <td><span style="color:var(--saffron);font-weight:700">${v.total_members}</span></td>
+      <td>
+        <button class="btn-edit-sm me-1" onclick="editVillage(${v.id})"><i class="fas fa-edit"></i> Edit</button>
+        <button class="btn-danger-sm" onclick="deleteVillage(${v.id})"><i class="fas fa-trash"></i> Del</button>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function saveVillage() {
+  const id = document.getElementById('vf-id').value;
+  const data = {
+    district_name: document.getElementById('vf-district').value,
+    taluka_name: document.getElementById('vf-taluka').value,
+    village_name: document.getElementById('vf-village').value,
+    head_name: document.getElementById('vf-head').value,
+    head_mobile: document.getElementById('vf-mobile').value,
+    total_houses: parseInt(document.getElementById('vf-houses').value)||0,
+    total_families: parseInt(document.getElementById('vf-families').value)||0,
+    total_members: parseInt(document.getElementById('vf-members').value)||0,
+    male_members: parseInt(document.getElementById('vf-male').value)||0,
+    female_members: parseInt(document.getElementById('vf-female').value)||0,
+  };
+  if (!data.village_name||!data.district_name) { toast('Village name and district are required','warning'); return; }
+  if (id) {
+    const idx = STORE.villages.findIndex(v=>v.id==id);
+    if (idx>-1) { STORE.villages[idx] = {...STORE.villages[idx],...data}; toast('Village updated!','success'); }
+  } else {
+    data.id = Date.now();
+    STORE.villages.push(data);
+    toast('Village added!','success');
+  }
+  clearVillageForm();
+  loadVillagesAdmin();
+}
+
+function editVillage(id) {
+  const v = STORE.villages.find(x=>x.id==id);
+  if (!v) return;
+  document.getElementById('vf-id').value = v.id;
+  document.getElementById('vf-district').value = v.district_name||'';
+  document.getElementById('vf-taluka').value = v.taluka_name||'';
+  document.getElementById('vf-village').value = v.village_name||'';
+  document.getElementById('vf-head').value = v.head_name||'';
+  document.getElementById('vf-mobile').value = v.head_mobile||'';
+  document.getElementById('vf-houses').value = v.total_houses||0;
+  document.getElementById('vf-families').value = v.total_families||0;
+  document.getElementById('vf-members').value = v.total_members||0;
+  document.getElementById('vf-male').value = v.male_members||0;
+  document.getElementById('vf-female').value = v.female_members||0;
+  document.getElementById('village-form-title').innerHTML = '<i class="fas fa-edit text-warning me-2"></i>Edit Village';
+}
+
+function deleteVillage(id) {
+  if (!confirm('Delete this village?')) return;
+  STORE.villages = STORE.villages.filter(v=>v.id!=id);
+  loadVillagesAdmin(); toast('Village deleted','danger');
+}
+
+function clearVillageForm() {
+  ['vf-id','vf-district','vf-taluka','vf-village','vf-head','vf-mobile','vf-houses','vf-families','vf-members','vf-male','vf-female'].forEach(id=>{ const el=document.getElementById(id); if(el) el.value=''; });
+  document.getElementById('village-form-title').innerHTML = '<i class="fas fa-plus text-warning me-2"></i>Add Village';
+}
+
+// ── MEMBERS ADMIN ───────────────────────────────────────────
+function loadMembersAdmin() {
+  const tbody = document.getElementById('members-tbody');
+  tbody.innerHTML = STORE.members.map((m,i)=>`
+    <tr>
+      <td><strong style="color:var(--saffron)">${i+1}</strong></td>
+      <td><strong>${m.name}</strong><div style="font-size:.78rem;color:var(--muted)">${m.father_name||''}</div></td>
+      <td>${m.village_name||'-'}</td>
+      <td><a href="tel:${m.mobile}" style="color:var(--saffron)">${m.mobile||'-'}</a></td>
+      <td>${m.occupation||'-'}</td>
+      <td><span style="color:${m.gender==='Male'?'#60a5fa':'#f472b6'}">${m.gender}</span></td>
+      <td><button class="btn-danger-sm" onclick="deleteMember(${m.id})"><i class="fas fa-trash"></i></button></td>
+    </tr>
+  `).join('') || '<tr><td colspan="7" style="text-align:center;padding:24px;color:var(--muted)">No members</td></tr>';
+}
+
+function deleteMember(id) {
+  if (!confirm('Delete member?')) return;
+  STORE.members = STORE.members.filter(m=>m.id!=id);
+  loadMembersAdmin(); toast('Member deleted','danger');
+}
+
+// ── LEADERS ADMIN ───────────────────────────────────────────
+function loadLeadersAdmin() {
+  const tbody = document.getElementById('leaders-tbody');
+  tbody.innerHTML = STORE.leaders.map(l=>`
+    <tr>
+      <td><strong>${l.name}</strong></td>
+      <td><span style="background:rgba(232,93,4,.15);color:var(--saffron);border-radius:50px;padding:2px 12px;font-size:.8rem">${l.designation}</span></td>
+      <td><a href="tel:${l.mobile}" style="color:var(--saffron)">${l.mobile}</a></td>
+      <td>
+        <button class="btn-edit-sm me-1" onclick="editLeader(${l.id})"><i class="fas fa-edit"></i></button>
+        <button class="btn-danger-sm" onclick="deleteLeader(${l.id})"><i class="fas fa-trash"></i></button>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function saveLeader() {
+  const id = document.getElementById('lf-id').value;
+  const data = {
+    name: document.getElementById('lf-name').value,
+    designation: document.getElementById('lf-desig').value,
+    mobile: document.getElementById('lf-mobile').value,
+    email: document.getElementById('lf-email').value,
+    address: document.getElementById('lf-address').value,
+    sort_order: parseInt(document.getElementById('lf-order').value)||1,
+  };
+  if (!data.name||!data.designation) { toast('Name and designation required','warning'); return; }
+  if (id) {
+    const idx = STORE.leaders.findIndex(l=>l.id==id);
+    if (idx>-1) { STORE.leaders[idx]={...STORE.leaders[idx],...data}; toast('Leader updated!','success'); }
+  } else {
+    data.id = Date.now();
+    STORE.leaders.push(data);
+    toast('Leader added!','success');
+  }
+  clearLeaderForm(); loadLeadersAdmin();
+}
+
+function editLeader(id) {
+  const l = STORE.leaders.find(x=>x.id==id);
+  if (!l) return;
+  document.getElementById('lf-id').value = l.id;
+  document.getElementById('lf-name').value = l.name||'';
+  document.getElementById('lf-desig').value = l.designation||'';
+  document.getElementById('lf-mobile').value = l.mobile||'';
+  document.getElementById('lf-email').value = l.email||'';
+  document.getElementById('lf-address').value = l.address||'';
+  document.getElementById('lf-order').value = l.sort_order||1;
+}
+function deleteLeader(id) {
+  if (!confirm('Delete leader?')) return;
+  STORE.leaders = STORE.leaders.filter(l=>l.id!=id);
+  loadLeadersAdmin(); toast('Leader deleted','danger');
+}
+function clearLeaderForm() {
+  ['lf-id','lf-name','lf-desig','lf-mobile','lf-email','lf-address'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('lf-order').value = '1';
+}
+
+// ── FEEDBACK ADMIN ──────────────────────────────────────────
+function loadFeedbackAdmin() {
+  const tbody = document.getElementById('feedback-tbody');
+  tbody.innerHTML = STORE.feedback.map(f=>`
+    <tr>
+      <td><strong>${f.name}</strong></td>
+      <td>${f.mobile||'-'}</td>
+      <td>${f.subject||'-'}</td>
+      <td style="max-width:240px;word-wrap:break-word">${f.message}</td>
+      <td style="white-space:nowrap">${f.created_at}</td>
+    </tr>
+  `).join('') || '<tr><td colspan="5" style="text-align:center;padding:40px;color:var(--muted)">No feedback received</td></tr>';
+}
+
+function uploadGallery() {
+  toast('Image upload requires PHP/server backend. This is a demo UI.','info');
+}
+
+// ── TABLE SEARCH ────────────────────────────────────────────
+function filterAdminTable(tbodyId, query, cols) {
+  const tbody = document.getElementById(tbodyId);
+  const q = query.toLowerCase();
+  Array.from(tbody.rows).forEach(row => {
+    const text = cols.map(c => (row.cells[c]?.textContent||'').toLowerCase()).join(' ');
+    row.style.display = text.includes(q) ? '' : 'none';
+  });
+}
+</script>
+</body>
+</html>
